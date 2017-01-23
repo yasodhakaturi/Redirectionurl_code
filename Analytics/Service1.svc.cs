@@ -176,12 +176,17 @@ namespace Analytics
          {
              try
              {
-                 int clientid = 0;
+                 int clientid = 0; int Uni_RID = 0;
                   clientid = (from c in dc.Clients
                                  where c.APIKey == api_key
                                  select c.PK_ClientID).SingleOrDefault();
+                  Uni_RID = (from registree in dc.RIDDATAs
+                                  where registree.ReferenceNumber.Trim() == ReferenceNumber.Trim()
+                                  select registree.PK_Rid).SingleOrDefault();
                   if (clientid != 0)
                   {
+                      if (Uni_RID == 0)
+                      { 
                       if (ReferenceNumber.Trim() != "" && Password.Trim() != "")
                       {
                           Uniqueid_RID = (from registree in dc.RIDDATAs
@@ -199,16 +204,18 @@ namespace Analytics
                           }
 
                           //if data found in uiddata table get data frim UIDRIDDATA 
-                          RID = (from uniqueid1 in dc.UIDandRIDDatas
-                                 where uniqueid1.TypeDiff == "2" &&
-                                 uniqueid1.UIDorRID == Uniqueid_RID
-                                 select uniqueid1.PK_UniqueId).SingleOrDefault();
+                          //RID = (from uniqueid1 in dc.UIDandRIDDatas
+                          //       where uniqueid1.TypeDiff == "2" &&
+                          //       uniqueid1.UIDorRID == Uniqueid_RID
+                          //       select uniqueid1.PK_UniqueId).SingleOrDefault();
+                          RID = new OperationsBO().GetUniqueid(Uniqueid_RID, "2");
+
 
                       }
                       else if (ReferenceNumber.Trim() != "" && Password.Trim() == "")
                       {
                           Uniqueid_RID = (from registree in dc.RIDDATAs
-                                          where registree.ReferenceNumber.Trim() == ReferenceNumber.Trim()
+                                          where registree.ReferenceNumber.Trim() == ReferenceNumber.Trim() && registree.FK_ClientId==clientid
                                           select registree.PK_Rid).SingleOrDefault();
                           if (Uniqueid_RID == 0)
                           {
@@ -241,6 +248,13 @@ namespace Analytics
                           RID_UIDRIID = "NULL";
                           return "ReferenceID not found";
                       }
+                  }
+                 else
+                {
+
+                  RID_UIDRIID = "NULL";
+                  return "ReferenceID Already exists.";
+                }
                   }
                   else
                   {

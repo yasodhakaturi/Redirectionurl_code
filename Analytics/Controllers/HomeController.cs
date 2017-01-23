@@ -13,8 +13,8 @@ namespace Analytics.Controllers
     {
         shortenURLEntities dc = new shortenURLEntities();
 
-        //public ActionResult Index()
-        //{
+        public ActionResult Index()
+        {
         //    //var rnd = new Random();
         //    //string unsuffled = "0123456789ABCDEFGHIJKLMOPQRSTUVWXYZabcdefghijklmopqrstuvwxyz-.!~*'_";
         //    //string shuffled = new string(unsuffled.OrderBy(r => rnd.Next()).ToArray());
@@ -23,8 +23,8 @@ namespace Analytics.Controllers
         //    obj = new OperationsBO().GetViewConfigDetails(url);
 
         //    return View(obj);
-        //    //return View();
-        //}
+            return View();
+        }
 
        
         //private static readonly char[] BaseChars =
