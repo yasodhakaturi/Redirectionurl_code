@@ -224,7 +224,6 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Client.cs">
       <DependentUpon>AnalyticsModel.tt</DependentUpon>
     </Compile>
@@ -240,7 +239,6 @@
     <Compile Include="Helpers\BO\DataInsertionBO.cs" />
     <Compile Include="Helpers\BO\Error.cs" />
     <Compile Include="Helpers\BO\OperationsBO.cs" />
-    <Compile Include="Helpers\BO\PWDDataBO.cs" />
     <Compile Include="Helpers\Utility\ErrorLogs.cs" />
     <Compile Include="Helpers\Utility\Helper.cs" />
     <Compile Include="Helpers\Utility\SqlHelper.cs" />
@@ -273,9 +271,6 @@
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="sysdiagram.cs">
-      <DependentUpon>AnalyticsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UIDandRIDData.cs">
       <DependentUpon>AnalyticsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="UIDDATA.cs">
@@ -334,6 +329,8 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Home\LoginRid.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -360,7 +357,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50955</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:3000/</IISUrl>
+          <IISUrl>http://localhost:8080/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

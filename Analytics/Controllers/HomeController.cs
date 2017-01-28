@@ -13,8 +13,8 @@ namespace Analytics.Controllers
     {
         shortenURLEntities dc = new shortenURLEntities();
 
-        //public ActionResult Index()
-        //{
+        public ActionResult Index()
+        {
         //    //var rnd = new Random();
         //    //string unsuffled = "0123456789ABCDEFGHIJKLMOPQRSTUVWXYZabcdefghijklmopqrstuvwxyz-.!~*'_";
         //    //string shuffled = new string(unsuffled.OrderBy(r => rnd.Next()).ToArray());
@@ -23,8 +23,8 @@ namespace Analytics.Controllers
         //    obj = new OperationsBO().GetViewConfigDetails(url);
 
         //    return View(obj);
-        //    //return View();
-        //}
+            return View();
+        }
 
        
         //private static readonly char[] BaseChars =
@@ -213,11 +213,11 @@ namespace Analytics.Controllers
                         if (rid_param.Contains(@"\"))
                             rid_param = rid_param.Replace(@"\", "");
                         rid_param = rid_param.Trim();
-                        long decodedvalue = new ConvertionBO().BaseToLong(rid_param);
-                        rid_shorturl = Convert.ToInt32(decodedvalue);
+                        //long decodedvalue = new ConvertionBO().BaseToLong(rid_param);
+                        //rid_shorturl = Convert.ToInt32(decodedvalue);
                         //string base64 = new ConvertionBO().LongToBase(Convert.ToInt32(rid_param));
                     //}
-            PWDDataBO obj = new OperationsBO().GetUIDRIDDATA(rid_shorturl);
+           // PWDDataBO obj = new OperationsBO().GetUIDRIDDATA(rid_shorturl);
             //if (obj != null && obj.typediff == "2" && obj.pwd != "" && obj.pwd != null)
             //{
             //    if (Logincookie == null)
@@ -238,11 +238,11 @@ namespace Analytics.Controllers
 
             //}
             //else 
-                if (obj != null && obj.typediff == "1")
-            {
+            //    if (obj != null && obj.typediff == "1")
+            //{
                 //call monitize service here
                 new OperationsBO().Monitize(rid_param);
-            }
+           // }
             return View();
             }
             catch (Exception ex)
