@@ -34,6 +34,10 @@ namespace Analytics
         public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<LoginHistory> LoginHistories { get; set; }
+        public virtual DbSet<Locations_Data> Locations_Data { get; set; }
+        public virtual DbSet<Master_Location> Master_Location { get; set; }
+        public virtual DbSet<tmp_rownum_update> tmp_rownum_update { get; set; }
+        public virtual DbSet<freeGeoipData> freeGeoipDatas { get; set; }
     
         public virtual int InsertintoUIDRID(string typediff, Nullable<int> uidorrid)
         {
@@ -69,7 +73,7 @@ namespace Analytics
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertRIDData", campaignNameParameter, referencenumberParameter, pwdParameter, clientidParameter);
         }
     
-        public virtual int InsertSHORTURLData(string ipv4, string ipv6, string browser, string browser_version, string city, string region, string country, string countrycode, string req_url, string useragent, string hostname, string deviceType, string isMobiledevice, Nullable<int> fk_uid, Nullable<int> fk_rid, Nullable<int> fK_clientid)
+        public virtual int InsertSHORTURLData(string ipv4, string ipv6, string browser, string browser_version, string ipnum, string req_url, string useragent, string hostname, string deviceType, string isMobiledevice, Nullable<int> fk_uid, Nullable<int> fk_rid, Nullable<int> fK_clientid)
         {
             var ipv4Parameter = ipv4 != null ?
                 new ObjectParameter("ipv4", ipv4) :
@@ -87,21 +91,9 @@ namespace Analytics
                 new ObjectParameter("browser_version", browser_version) :
                 new ObjectParameter("browser_version", typeof(string));
     
-            var cityParameter = city != null ?
-                new ObjectParameter("city", city) :
-                new ObjectParameter("city", typeof(string));
-    
-            var regionParameter = region != null ?
-                new ObjectParameter("Region", region) :
-                new ObjectParameter("Region", typeof(string));
-    
-            var countryParameter = country != null ?
-                new ObjectParameter("country", country) :
-                new ObjectParameter("country", typeof(string));
-    
-            var countrycodeParameter = countrycode != null ?
-                new ObjectParameter("countrycode", countrycode) :
-                new ObjectParameter("countrycode", typeof(string));
+            var ipnumParameter = ipnum != null ?
+                new ObjectParameter("ipnum", ipnum) :
+                new ObjectParameter("ipnum", typeof(string));
     
             var req_urlParameter = req_url != null ?
                 new ObjectParameter("req_url", req_url) :
@@ -135,10 +127,10 @@ namespace Analytics
                 new ObjectParameter("FK_clientid", fK_clientid) :
                 new ObjectParameter("FK_clientid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertSHORTURLData", ipv4Parameter, ipv6Parameter, browserParameter, browser_versionParameter, cityParameter, regionParameter, countryParameter, countrycodeParameter, req_urlParameter, useragentParameter, hostnameParameter, deviceTypeParameter, isMobiledeviceParameter, fk_uidParameter, fk_ridParameter, fK_clientidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertSHORTURLData", ipv4Parameter, ipv6Parameter, browserParameter, browser_versionParameter, ipnumParameter, req_urlParameter, useragentParameter, hostnameParameter, deviceTypeParameter, isMobiledeviceParameter, fk_uidParameter, fk_ridParameter, fK_clientidParameter);
         }
     
-        public virtual int InsertUIDData(Nullable<int> fk_rid, Nullable<int> fk_clientid, string referencenumber, string longurl, string mobilenumber, string uniqueid)
+        public virtual int InsertUIDData(Nullable<int> fk_rid, Nullable<int> fk_clientid, string referencenumber, string longurl, string mobilenumber)
         {
             var fk_ridParameter = fk_rid.HasValue ?
                 new ObjectParameter("fk_rid", fk_rid) :
@@ -160,11 +152,7 @@ namespace Analytics
                 new ObjectParameter("mobilenumber", mobilenumber) :
                 new ObjectParameter("mobilenumber", typeof(string));
     
-            var uniqueidParameter = uniqueid != null ?
-                new ObjectParameter("Uniqueid", uniqueid) :
-                new ObjectParameter("Uniqueid", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUIDData", fk_ridParameter, fk_clientidParameter, referencenumberParameter, longurlParameter, mobilenumberParameter, uniqueidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUIDData", fk_ridParameter, fk_clientidParameter, referencenumberParameter, longurlParameter, mobilenumberParameter);
         }
     
         public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)

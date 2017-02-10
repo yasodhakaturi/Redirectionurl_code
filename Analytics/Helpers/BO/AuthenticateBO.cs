@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Analytics.Helpers.Utility;
 using System.Web.Security;
-using System.Data.Objects;
+using System.Data;
 using Analytics.Helpers.BO;
 using System.Data.Entity.Infrastructure;
 using System.Data;

@@ -225,6 +225,22 @@ namespace Analytics.Helpers.BO
         //    obj.apiUrl = appobj;
         //    return obj;
         //}
+        public string convertAddresstoNumber(string ipaddress)
+        {
+            string[] ipaddressstr;
+            ipaddressstr = ipaddress.Split('.');
+            long o1 = Convert.ToInt64(ipaddressstr[0]);
+            long o2 = Convert.ToInt64(ipaddressstr[1]);
+            long o3 = Convert.ToInt64(ipaddressstr[2]);
+            long o4 = Convert.ToInt64(ipaddressstr[3]);
+
+            long ip = (16777216 * o1) + (65536 * o2) + (256 * o3) + o4;
+            string ipstr = ip.ToString();
+            return ipstr;
+            //long longAddress = BitConverter.ToInt64(IPAddress.Parse(ipaddress).GetAddressBytes(), 0);
+            //string ipAddress = new IPAddress(BitConverter.GetBytes(intAddress)).ToString();
+            //return longAddress.ToString();
+        }
         public string IpAddress()
         {
             string strIpAddress;
@@ -240,16 +256,17 @@ namespace Analytics.Helpers.BO
             try
 
             {
-                string longurl = "";
+                string longurl = ""; string ipnum = "";
                 //long decodedvalue = new ConvertionBO().BaseToLong(Shorturl);
                 //int Uniqueid_SHORTURLDATA = Convert.ToInt32(decodedvalue);
                 int Fk_UID = 0;
                 UIDDATA uid_obj = new UIDDATA();
                 uid_obj = new OperationsBO().CheckUniqueid(Shorturl);
                 //if (new OperationsBO().CheckUniqueid(Shorturl))
-                longurl = uid_obj.Longurl;
                 if (uid_obj != null)
                 {
+                    longurl = uid_obj.Longurl;
+
                     //int? Fk_UID = (from u in dc.UIDandRIDDatas
                     //               where u.PK_UniqueId == Uniqueid_SHORTURLDATA && u.TypeDiff == "1"
                     //               select u.UIDorRID).SingleOrDefault();
@@ -276,46 +293,48 @@ namespace Analytics.Helpers.BO
                     string hostname = HttpContext.Current.Request.UserHostName;
                     string devicetype = HttpContext.Current.Request.Browser.Platform;
                     string ismobiledevice = HttpContext.Current.Request.Browser.IsMobileDevice.ToString();
-                    //retrieve longurl from uid
-                    //longurl = uid_obj.Longurl;
-                    //longurl = new OperationsBO().GetLongURL(Uniqueid_SHORTURLDATA);
-                    //if(longurl!=null)
-                    //    HttpContext.Current.Response.Redirect(longurl);
+                    if(ipv4!="::1" && ipv4!=null&&ipv4!="")
+                     ipnum = convertAddresstoNumber(ipv4);
+
+                    ipnum = convertAddresstoNumber("192.168.1.64");
+
 
                     //retrive city,country
-                    var City = ""; var Region = ""; var Country = ""; var CountryCode = ""; var url = "";
-                    //url = "http://freegeoip.net/json/" + "99.25.39.48";
-                    url = "http://freegeoip.net/json/" + ipv4;
-                    var request = System.Net.WebRequest.Create(url);
-                    using (WebResponse wrs = request.GetResponse())
-                    using (Stream stream = wrs.GetResponseStream())
-                    using (StreamReader reader = new StreamReader(stream))
-                    {
-                        string json = reader.ReadToEnd();
-                        var obj = JObject.Parse(json);
-                        City = (string)obj["city"];
-                        Region = (string)obj["region_name"];
-                        Country = (string)obj["country_name"];
-                        CountryCode = (string)obj["country_code"];
-                    }
-                    //retrive city,country if city country not found with ipv4
-                    if (City == "" && Country == "")
-                    {
-                        url = "http://freegeoip.net/json/" + ipv6;
-                        var request1 = System.Net.WebRequest.Create(url);
-                        using (WebResponse wrs = request1.GetResponse())
-                        using (Stream stream = wrs.GetResponseStream())
-                        using (StreamReader reader = new StreamReader(stream))
-                        {
-                            string json = reader.ReadToEnd();
-                            var obj = JObject.Parse(json);
-                            City = (string)obj["city"];
-                            Region = (string)obj["region_name"];
-                            Country = (string)obj["country_name"];
-                            CountryCode = (string)obj["country_code"];
-                        }
-                    }
-                    new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, browser, browserversion, City, Region, Country, CountryCode, req_url, useragent, hostname, devicetype, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
+                    //var City = ""; var Region = ""; var Country = ""; var CountryCode = ""; var url = "";
+                    ////url = "http://freegeoip.net/json/" + "99.25.39.48";
+                    //url = "http://freegeoip.net/json/" + ipv4;
+                    //var request = System.Net.WebRequest.Create(url);
+                    //using (WebResponse wrs = request.GetResponse())
+                    //using (Stream stream = wrs.GetResponseStream())
+                    //using (StreamReader reader = new StreamReader(stream))
+                    //{
+                    //    string json = reader.ReadToEnd();
+                    //    var obj = JObject.Parse(json);
+                    //    City = (string)obj["city"];
+                    //    Region = (string)obj["region_name"];
+                    //    Country = (string)obj["country_name"];
+                    //    CountryCode = (string)obj["country_code"];
+                    //}
+                    ////retrive city,country if city country not found with ipv4
+                    //if (City == "" && Country == "")
+                    //{
+                    //    url = "http://freegeoip.net/json/" + ipv6;
+                    //    var request1 = System.Net.WebRequest.Create(url);
+                    //    using (WebResponse wrs = request1.GetResponse())
+                    //    using (Stream stream = wrs.GetResponseStream())
+                    //    using (StreamReader reader = new StreamReader(stream))
+                    //    {
+                    //        string json = reader.ReadToEnd();
+                    //        var obj = JObject.Parse(json);
+                    //        City = (string)obj["city"];
+                    //        Region = (string)obj["region_name"];
+                    //        Country = (string)obj["country_name"];
+                    //        CountryCode = (string)obj["country_code"];
+                    //    }
+                    //}
+                    //new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, browser, browserversion, City, Region, Country, CountryCode, req_url, useragent, hostname, devicetype, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
+                    new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, ipnum,browser, browserversion, req_url, useragent, hostname, devicetype, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
+
                 }
                 //WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
                 //if (!longurl.StartsWith("http://") && !longurl.StartsWith("https://"))
