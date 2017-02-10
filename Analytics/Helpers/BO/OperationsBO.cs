@@ -296,7 +296,7 @@ namespace Analytics.Helpers.BO
                     if(ipv4!="::1" && ipv4!=null&&ipv4!="")
                      ipnum = convertAddresstoNumber(ipv4);
 
-                    ipnum = convertAddresstoNumber("192.168.1.64");
+                    //ipnum = convertAddresstoNumber("192.168.1.64");
 
 
                     //retrive city,country
