@@ -32,6 +32,12 @@ namespace Analytics
         public Nullable<int> FK_RID { get; set; }
         public Nullable<int> FK_ClientID { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<long> ip_num { get; set; }
+        public string PostalCode { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
+        public string MetroCode { get; set; }
+        public Nullable<int> FK_City_Master_id { get; set; }
     
         public virtual RIDDATA RIDDATA { get; set; }
         public virtual SHORTURLDATA SHORTURLDATA1 { get; set; }

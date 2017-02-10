@@ -4,14 +4,30 @@
 }
 
 <!DOCTYPE html>
-
-<html>
 <head>
+    <script type="text/javascript" src="/jquery-3.1.1.min.js"></script>
+
     <meta name="viewport" content="width=device-width" />
     <title>LoginRid</title>
 </head>
+<script>
+    setInterval(function msync() {
+        $.ajax({
+            type: "POST",
+            url: '/Home/MSYNC',
+            data: {},
+            success: function (response) {
+               
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+    }, 100);
+    </script>
+<html>
+
 <body>
-    <div> 
+    <div>
         <h1>Error...</h1>
     </div>
 </body>

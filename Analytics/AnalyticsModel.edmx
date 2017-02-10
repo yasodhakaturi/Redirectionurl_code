@@ -30,6 +30,36 @@
           <Property Name="StackTrace" Type="nvarchar(max)" />
           <Property Name="ErrorMessage" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="freeGeoipData">
+          <Key>
+            <PropertyRef Name="PK_freeGeoip_id" />
+          </Key>
+          <Property Name="PK_freeGeoip_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ipv4" Type="nvarchar(max)" />
+          <Property Name="ip_num" Type="bigint" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="CountryCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="Region" Type="nvarchar" MaxLength="50" />
+          <Property Name="PostalCode" Type="nvarchar(max)" />
+          <Property Name="Latitude" Type="nvarchar(max)" />
+          <Property Name="Longitude" Type="nvarchar(max)" />
+          <Property Name="MetroCode" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Locations_Data">
+          <Key>
+            <PropertyRef Name="PK_LOC_ID" />
+          </Key>
+          <Property Name="PK_LOC_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="locId" Type="int" Nullable="false" />
+          <Property Name="country" Type="nvarchar(max)" />
+          <Property Name="region" Type="nvarchar(max)" />
+          <Property Name="city" Type="nvarchar(max)" />
+          <Property Name="postalCode" Type="nvarchar(max)" />
+          <Property Name="latitude" Type="nvarchar(max)" />
+          <Property Name="longitude" Type="nvarchar(max)" />
+          <Property Name="metroCode" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="LoginHistory">
           <Key>
             <PropertyRef Name="PKLoginHistoryId" />
@@ -39,6 +69,17 @@
           <Property Name="Role" Type="nvarchar" MaxLength="50" />
           <Property Name="IpAddress" Type="nvarchar(max)" />
           <Property Name="LoginDateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Master_Location">
+          <Key>
+            <PropertyRef Name="PK_MASTERID" />
+          </Key>
+          <Property Name="PK_MASTERID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Start_IPv4_address" Type="nvarchar(max)" />
+          <Property Name="End_IPv4_address" Type="nvarchar(max)" />
+          <Property Name="startIpNum" Type="bigint" Nullable="false" />
+          <Property Name="endIpNum" Type="bigint" Nullable="false" />
+          <Property Name="locId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="RIDDATA">
           <Key>
@@ -61,12 +102,17 @@
           <Property Name="PK_Shorturl" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Ipv4" Type="nvarchar(max)" />
           <Property Name="Ipv6" Type="nvarchar(max)" />
+          <Property Name="ip_num" Type="bigint" />
           <Property Name="Browser" Type="nvarchar" MaxLength="50" />
           <Property Name="Browser_version" Type="nvarchar" MaxLength="50" />
           <Property Name="City" Type="nvarchar" MaxLength="50" />
           <Property Name="Region" Type="nvarchar" MaxLength="50" />
           <Property Name="Country" Type="nvarchar" MaxLength="50" />
           <Property Name="CountryCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="PostalCode" Type="nvarchar(max)" />
+          <Property Name="Latitude" Type="nvarchar(max)" />
+          <Property Name="Longitude" Type="nvarchar(max)" />
+          <Property Name="MetroCode" Type="nvarchar(max)" />
           <Property Name="Req_url" Type="nvarchar(max)" />
           <Property Name="UserAgent" Type="nvarchar(max)" />
           <Property Name="Hostname" Type="nvarchar" MaxLength="50" />
@@ -76,6 +122,7 @@
           <Property Name="FK_Uid" Type="int" />
           <Property Name="FK_RID" Type="int" />
           <Property Name="FK_ClientID" Type="int" />
+          <Property Name="FK_City_Master_id" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -86,6 +133,13 @@
           <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tmp_rownum_update">
+          <Key>
+            <PropertyRef Name="PK_RowUpdate_ID" />
+          </Key>
+          <Property Name="PK_RowUpdate_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="row_update" Type="bigint" />
         </EntityType>
         <EntityType Name="UIDDATA">
           <Key>
@@ -99,7 +153,7 @@
           <Property Name="MobileNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="UpdatedDate" Type="datetime" />
-          <Property Name="UniqueNumber" Type="nvarchar" MaxLength="450" />
+          <Property Name="UniqueNumber" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_RIDDATA_Client">
           <End Role="Client" Type="Self.Client" Multiplicity="1" />
@@ -189,10 +243,7 @@
           <Parameter Name="ipv6" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="browser" Type="nvarchar" Mode="In" />
           <Parameter Name="browser_version" Type="nvarchar" Mode="In" />
-          <Parameter Name="city" Type="nvarchar" Mode="In" />
-          <Parameter Name="Region" Type="nvarchar" Mode="In" />
-          <Parameter Name="country" Type="nvarchar" Mode="In" />
-          <Parameter Name="countrycode" Type="nvarchar" Mode="In" />
+          <Parameter Name="ipnum" Type="nvarchar" Mode="In" />
           <Parameter Name="req_url" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="useragent" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="hostname" Type="nvarchar" Mode="In" />
@@ -208,7 +259,6 @@
           <Parameter Name="referencenumber" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="longurl" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="mobilenumber" Type="nvarchar" Mode="In" />
-          <Parameter Name="Uniqueid" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -253,10 +303,14 @@
         <EntityContainer Name="shortenURLModelStoreContainer">
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="freeGeoipData" EntityType="Self.freeGeoipData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locations_Data" EntityType="Self.Locations_Data" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LoginHistory" EntityType="Self.LoginHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Master_Location" EntityType="Self.Master_Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RIDDATA" EntityType="Self.RIDDATA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SHORTURLDATA" EntityType="Self.SHORTURLDATA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tmp_rownum_update" EntityType="Self.tmp_rownum_update" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UIDDATA" EntityType="Self.UIDDATA" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_RIDDATA_Client" Association="Self.FK_RIDDATA_Client">
             <End Role="Client" EntitySet="Client" />
@@ -331,6 +385,12 @@
           <Property Name="FK_ClientID" Type="Int32" />
           <NavigationProperty Name="Client" Relationship="shortenURLModel.FK_SHORTURLDATA_Client" FromRole="SHORTURLDATA" ToRole="Client" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ip_num" Type="Int64" />
+          <Property Name="PostalCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MetroCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FK_City_Master_id" Type="Int32" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -359,7 +419,7 @@
           <NavigationProperty Name="Client" Relationship="shortenURLModel.FK_UIDDATA_Client" FromRole="UIDDATA" ToRole="Client" />
           <NavigationProperty Name="UIDDATA1" Relationship="shortenURLModel.FK_UIDDATA_UIDDATA" FromRole="UIDDATA" ToRole="UIDDATA1" />
           <NavigationProperty Name="UIDDATA2" Relationship="shortenURLModel.FK_UIDDATA_UIDDATA" FromRole="UIDDATA1" ToRole="UIDDATA" />
-          <Property Name="UniqueNumber" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+          <Property Name="UniqueNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="shortenURLEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="RIDDATAs" EntityType="Self.RIDDATA" />
@@ -381,10 +441,7 @@
             <Parameter Name="ipv6" Mode="In" Type="String" />
             <Parameter Name="browser" Mode="In" Type="String" />
             <Parameter Name="browser_version" Mode="In" Type="String" />
-            <Parameter Name="city" Mode="In" Type="String" />
-            <Parameter Name="Region" Mode="In" Type="String" />
-            <Parameter Name="country" Mode="In" Type="String" />
-            <Parameter Name="countrycode" Mode="In" Type="String" />
+            <Parameter Name="ipnum" Mode="In" Type="String" />
             <Parameter Name="req_url" Mode="In" Type="String" />
             <Parameter Name="useragent" Mode="In" Type="String" />
             <Parameter Name="hostname" Mode="In" Type="String" />
@@ -400,7 +457,6 @@
             <Parameter Name="referencenumber" Mode="In" Type="String" />
             <Parameter Name="longurl" Mode="In" Type="String" />
             <Parameter Name="mobilenumber" Mode="In" Type="String" />
-            <Parameter Name="Uniqueid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
@@ -477,6 +533,10 @@
             <End Role="UIDDATA" EntitySet="UIDDATAs" />
             <End Role="UIDDATA1" EntitySet="UIDDATAs" />
           </AssociationSet>
+          <EntitySet Name="Locations_Data" EntityType="shortenURLModel.Locations_Data" />
+          <EntitySet Name="Master_Location" EntityType="shortenURLModel.Master_Location" />
+          <EntitySet Name="tmp_rownum_update" EntityType="shortenURLModel.tmp_rownum_update" />
+          <EntitySet Name="freeGeoipDatas" EntityType="shortenURLModel.freeGeoipData" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -631,6 +691,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Locations_Data">
+          <Key>
+            <PropertyRef Name="PK_LOC_ID" />
+          </Key>
+          <Property Name="PK_LOC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="locId" Type="Int32" Nullable="false" />
+          <Property Name="country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="region" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="city" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="postalCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="latitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="longitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="metroCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Master_Location">
+          <Key>
+            <PropertyRef Name="PK_MASTERID" />
+          </Key>
+          <Property Name="PK_MASTERID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Start_IPv4_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="End_IPv4_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="startIpNum" Type="Int64" Nullable="false" />
+          <Property Name="endIpNum" Type="Int64" Nullable="false" />
+          <Property Name="locId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tmp_rownum_update">
+          <Key>
+            <PropertyRef Name="PK_RowUpdate_ID" />
+          </Key>
+          <Property Name="PK_RowUpdate_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="row_update" Type="Int64" />
+        </EntityType>
+        <EntityType Name="freeGeoipData">
+          <Key>
+            <PropertyRef Name="PK_freeGeoip_id" />
+          </Key>
+          <Property Name="PK_freeGeoip_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ipv4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ip_num" Type="Int64" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CountryCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Region" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Longitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MetroCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -655,6 +763,12 @@
           <EntitySetMapping Name="SHORTURLDATAs">
             <EntityTypeMapping TypeName="shortenURLModel.SHORTURLDATA">
               <MappingFragment StoreEntitySet="SHORTURLDATA">
+                <ScalarProperty Name="FK_City_Master_id" ColumnName="FK_City_Master_id" />
+                <ScalarProperty Name="MetroCode" ColumnName="MetroCode" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="ip_num" ColumnName="ip_num" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="FK_ClientID" ColumnName="FK_ClientID" />
                 <ScalarProperty Name="FK_RID" ColumnName="FK_RID" />
@@ -781,6 +895,58 @@
                 <ScalarProperty Name="Role" ColumnName="Role" />
                 <ScalarProperty Name="FKPersonId" ColumnName="FKPersonId" />
                 <ScalarProperty Name="PKLoginHistoryId" ColumnName="PKLoginHistoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations_Data">
+            <EntityTypeMapping TypeName="shortenURLModel.Locations_Data">
+              <MappingFragment StoreEntitySet="Locations_Data">
+                <ScalarProperty Name="metroCode" ColumnName="metroCode" />
+                <ScalarProperty Name="longitude" ColumnName="longitude" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="postalCode" ColumnName="postalCode" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="region" ColumnName="region" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="locId" ColumnName="locId" />
+                <ScalarProperty Name="PK_LOC_ID" ColumnName="PK_LOC_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Master_Location">
+            <EntityTypeMapping TypeName="shortenURLModel.Master_Location">
+              <MappingFragment StoreEntitySet="Master_Location">
+                <ScalarProperty Name="locId" ColumnName="locId" />
+                <ScalarProperty Name="endIpNum" ColumnName="endIpNum" />
+                <ScalarProperty Name="startIpNum" ColumnName="startIpNum" />
+                <ScalarProperty Name="End_IPv4_address" ColumnName="End_IPv4_address" />
+                <ScalarProperty Name="Start_IPv4_address" ColumnName="Start_IPv4_address" />
+                <ScalarProperty Name="PK_MASTERID" ColumnName="PK_MASTERID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tmp_rownum_update">
+            <EntityTypeMapping TypeName="shortenURLModel.tmp_rownum_update">
+              <MappingFragment StoreEntitySet="tmp_rownum_update">
+                <ScalarProperty Name="row_update" ColumnName="row_update" />
+                <ScalarProperty Name="PK_RowUpdate_ID" ColumnName="PK_RowUpdate_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="freeGeoipDatas">
+            <EntityTypeMapping TypeName="shortenURLModel.freeGeoipData">
+              <MappingFragment StoreEntitySet="freeGeoipData">
+                <ScalarProperty Name="MetroCode" ColumnName="MetroCode" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="ip_num" ColumnName="ip_num" />
+                <ScalarProperty Name="Ipv4" ColumnName="Ipv4" />
+                <ScalarProperty Name="PK_freeGeoip_id" ColumnName="PK_freeGeoip_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
