@@ -20,7 +20,7 @@ namespace Analytics.Helpers.BO
 {
     public class OperationsBO
     {
-        shortenURLEntities1 dc = new shortenURLEntities1();
+        shortenURLEntities dc = new shortenURLEntities();
         string connStr = ConfigurationManager.ConnectionStrings["shortenURLConnectionString"].ConnectionString;
         SqlConnection lSQLConn = null;
         SqlCommand lSQLCmd = new SqlCommand();
@@ -253,7 +253,7 @@ namespace Analytics.Helpers.BO
             return strIpAddress;
         }
 
-public void Monitize(string Shorturl)
+        public void Monitize(string Shorturl, string latitude, string longitude)
         {
             try
 
@@ -272,9 +272,9 @@ public void Monitize(string Shorturl)
                     //int? Fk_UID = (from u in dc.UIDandRIDDatas
                     //               where u.PK_UniqueId == Uniqueid_SHORTURLDATA && u.TypeDiff == "1"
                     //               select u.UIDorRID).SingleOrDefault();
-                    
-                    if (longurl != null && !longurl.StartsWith("https://"))
-                        HttpContext.Current.Response.Redirect("http://www." + longurl);
+
+                    if (longurl != null && !longurl.StartsWith("http://") && !longurl.StartsWith("https://"))
+                        HttpContext.Current.Response.Redirect("https://" + longurl);
                     else
                         HttpContext.Current.Response.Redirect(longurl);
                     Fk_UID = uid_obj.PK_Uid;
@@ -286,16 +286,17 @@ public void Monitize(string Shorturl)
                                         select r.FK_ClientId).SingleOrDefault();
                     //retrive ipaddress and browser
                     //string ipv4 = new ConvertionBO().GetIP4Address();
+                    var req=HttpContext.Current.Request;
                     string ipv4 = IpAddress();
-                    string ipv6 = HttpContext.Current.Request.UserHostAddress;
-                    string browser = HttpContext.Current.Request.Browser.Browser;
-                    string browserversion = HttpContext.Current.Request.Browser.Version;
-                    string req_url = HttpContext.Current.Request.Url.ToString();
+                    string ipv6 = req.UserHostAddress;
+                    string browser = req.Browser.Browser;
+                    string browserversion = req.Browser.Version;
+                    string req_url = req.UrlReferrer.ToString();
                     //string[] header_array = HttpContext.Current.Request.Headers.AllKeys;
-                    string useragent = HttpContext.Current.Request.UserAgent;
-                    string hostname = HttpContext.Current.Request.UserHostName;
-                    string devicetype = HttpContext.Current.Request.Browser.Platform;
-                    string ismobiledevice = HttpContext.Current.Request.Browser.IsMobileDevice.ToString();
+                    string useragent = req.UserAgent;
+                    string hostname = req.UserHostName;
+                    //string devicetype = req.Browser.Platform;
+                    string ismobiledevice = req.Browser.IsMobileDevice.ToString();
                     if(ipv4!="::1" && ipv4!=null&&ipv4!="")
                      ipnum = convertAddresstoNumber(ipv4);
 
@@ -336,8 +337,12 @@ public void Monitize(string Shorturl)
                     //    }
                     //}
                     //new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, browser, browserversion, City, Region, Country, CountryCode, req_url, useragent, hostname, devicetype, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
-                    new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, ipnum,browser, browserversion, req_url, useragent, hostname, devicetype, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
+                    new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, ipnum,browser, browserversion,latitude,longitude, req_url, useragent, hostname, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
 
+                }
+                else
+                {
+                    HttpContext.Current.Response.Redirect("../404.html", false);
                 }
                 //WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
                 //if (!longurl.StartsWith("http://") && !longurl.StartsWith("https://"))
