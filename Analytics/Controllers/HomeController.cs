@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using System.Web.Http.Cors;
 using System.Web.Mvc;
 
 namespace Analytics.Controllers
 {
     public class HomeController : Controller
     {
-        shortenURLEntities dc = new shortenURLEntities();
+        shortenURLEntities1 dc = new shortenURLEntities1();
 
         public ActionResult Index()
         {
@@ -30,7 +31,7 @@ namespace Analytics.Controllers
         {
             return View();
         }
-
+        
         //private static readonly char[] BaseChars =
         //"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz./,".ToCharArray();
         //private static readonly Dictionary<char, int> CharValues = BaseChars
@@ -326,8 +327,8 @@ namespace Analytics.Controllers
 
 
         }
-        public ActionResult LoginRid()
-        // public ActionResult LoginRid(string latitude, string longitude)
+        //public ActionResult LoginRid()
+        public ActionResult LoginRid(string latitude, string longitude)
         {
             try
             {

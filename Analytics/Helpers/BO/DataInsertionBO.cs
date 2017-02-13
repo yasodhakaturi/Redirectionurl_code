@@ -19,7 +19,7 @@ namespace Analytics.Helpers.BO
 
     public class DataInsertionBO
     {
-        shortenURLEntities dc = new shortenURLEntities();
+        shortenURLEntities1 dc = new shortenURLEntities1();
         SqlConnection lSQLConn = null;
         SqlCommand lSQLCmd = new SqlCommand();
         string connStr = "";
@@ -210,7 +210,7 @@ namespace Analytics.Helpers.BO
 
         public void UpdateRowid(long? rowid)
         {
-            using (var dc = new shortenURLEntities())
+            using (var dc = new shortenURLEntities1())
             {
                 var res = dc.tmp_rownum_update.SingleOrDefault(x => x.PK_RowUpdate_ID == 1);
                 if(res!=null)

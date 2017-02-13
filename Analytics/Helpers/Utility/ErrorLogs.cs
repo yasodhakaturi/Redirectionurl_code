@@ -12,7 +12,7 @@ namespace Analytics.Helpers.Utility
         {
             try
             {
-                shortenURLEntities dc = new shortenURLEntities();
+                shortenURLEntities1 dc = new shortenURLEntities1();
                 ErrorLog objErrorLog = new ErrorLog();
                 objErrorLog.StackTrace = stackTraceInfo;
                 objErrorLog.ErrorMessage = message;

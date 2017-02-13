@@ -14,12 +14,13 @@ using System.Net;
 using System.Security.Cryptography;
 using System.ServiceModel.Web;
 using System.Web;
+using System.Web.Http.Cors;
 
 namespace Analytics.Helpers.BO
 {
     public class OperationsBO
     {
-        shortenURLEntities dc = new shortenURLEntities();
+        shortenURLEntities1 dc = new shortenURLEntities1();
         string connStr = ConfigurationManager.ConnectionStrings["shortenURLConnectionString"].ConnectionString;
         SqlConnection lSQLConn = null;
         SqlCommand lSQLCmd = new SqlCommand();
@@ -251,7 +252,8 @@ namespace Analytics.Helpers.BO
             }
             return strIpAddress;
         }
-        public void Monitize(string Shorturl)
+
+public void Monitize(string Shorturl)
         {
             try
 
@@ -270,8 +272,9 @@ namespace Analytics.Helpers.BO
                     //int? Fk_UID = (from u in dc.UIDandRIDDatas
                     //               where u.PK_UniqueId == Uniqueid_SHORTURLDATA && u.TypeDiff == "1"
                     //               select u.UIDorRID).SingleOrDefault();
-                    if (longurl != null && !longurl.StartsWith("http://") && !longurl.StartsWith("https://"))
-                        HttpContext.Current.Response.Redirect("http://" + longurl);
+                    
+                    if (longurl != null && !longurl.StartsWith("https://"))
+                        HttpContext.Current.Response.Redirect("http://www." + longurl);
                     else
                         HttpContext.Current.Response.Redirect(longurl);
                     Fk_UID = uid_obj.PK_Uid;
@@ -296,7 +299,7 @@ namespace Analytics.Helpers.BO
                     if(ipv4!="::1" && ipv4!=null&&ipv4!="")
                      ipnum = convertAddresstoNumber(ipv4);
 
-                    ipnum = convertAddresstoNumber("192.168.1.64");
+                    //ipnum = convertAddresstoNumber("192.168.1.64");
 
 
                     //retrive city,country

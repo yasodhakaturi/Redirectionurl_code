@@ -9,7 +9,7 @@ namespace Analytics.Helpers.BO
 {
     public class ConvertionBO
     {
-        shortenURLEntities dc = new shortenURLEntities();
+        shortenURLEntities1 dc = new shortenURLEntities1();
        // private static readonly char[] BaseChars =
        //"0123456789ABCDEFGHIJKLMOPQRSTUVWXYZabcdefghijklmopqrstuvwxyz-.!~*'_".ToCharArray();
         private static readonly char[] BaseChars =

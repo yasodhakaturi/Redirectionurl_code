@@ -13,7 +13,7 @@ namespace Analytics.Helpers.BO
 {
     public class AuthenticateBO
     {
-        shortenURLEntities dc = new shortenURLEntities();
+        shortenURLEntities1 dc = new shortenURLEntities1();
 
         public bool GetAuthenticateUser(string userName, string password, out int loginCount, out int CheckCount, out string name)
         {

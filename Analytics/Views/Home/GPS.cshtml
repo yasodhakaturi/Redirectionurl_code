@@ -1,0 +1,32 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<head runat="server">
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript">
+    window.onload = function(){
+        function success(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            window.location.href = "/Home/LoginRid?latitude=" + latitude + "&longitude=" + longitude;
+        }
+        function error() {
+            var latitude = "";
+            var longitude = "";
+            window.location.href = "/Home/LoginRid?latitude=0&longitude=0";
+        }
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
+
+   
+    </script>
+</head>
+<html>
+
+<body>
+
+
+</body>
+</html>
