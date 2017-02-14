@@ -26,13 +26,13 @@ namespace Analytics
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
+        public string Role { get; set; }
+        public Nullable<System.DateTime> LoginDate { get; set; }
+        public Nullable<int> LoginCount { get; set; }
         public string APIKey { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public string Role { get; set; }
-        public Nullable<System.DateTime> LoginDate { get; set; }
-        public Nullable<int> LoginCount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RIDDATA> RIDDATAs { get; set; }

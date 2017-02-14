@@ -13,7 +13,7 @@ namespace Analytics
     
     public partial class spGetALLCOUNTS1_Result
     {
-        public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<System.DateTime> RequestedDate { get; set; }
         public Nullable<int> RequestCount { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Web;
-using System.Web.Http.Cors;
+//using System.Web.Http.Cors;
 using System.Web.Mvc;
 
 namespace Analytics.Controllers

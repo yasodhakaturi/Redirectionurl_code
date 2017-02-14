@@ -27,17 +27,16 @@ namespace Analytics
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
+        public virtual DbSet<freeGeoipData> freeGeoipDatas { get; set; }
+        public virtual DbSet<Locations_Data> Locations_Data { get; set; }
+        public virtual DbSet<LoginHistory> LoginHistories { get; set; }
+        public virtual DbSet<Master_Location> Master_Location { get; set; }
         public virtual DbSet<RIDDATA> RIDDATAs { get; set; }
         public virtual DbSet<SHORTURLDATA> SHORTURLDATAs { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<UIDDATA> UIDDATAs { get; set; }
-        public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
-        public virtual DbSet<Client> Clients { get; set; }
-        public virtual DbSet<LoginHistory> LoginHistories { get; set; }
-        public virtual DbSet<Locations_Data> Locations_Data { get; set; }
-        public virtual DbSet<Master_Location> Master_Location { get; set; }
         public virtual DbSet<tmp_rownum_update> tmp_rownum_update { get; set; }
-        public virtual DbSet<freeGeoipData> freeGeoipDatas { get; set; }
+        public virtual DbSet<UIDDATA> UIDDATAs { get; set; }
     
         public virtual int InsertintoUIDRID(string typediff, Nullable<int> uidorrid)
         {
@@ -73,7 +72,7 @@ namespace Analytics
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertRIDData", campaignNameParameter, referencenumberParameter, pwdParameter, clientidParameter);
         }
     
-        public virtual int InsertSHORTURLData(string ipv4, string ipv6, string browser, string browser_version, string ipnum, string req_url, string useragent, string hostname, string deviceType, string isMobiledevice, Nullable<int> fk_uid, Nullable<int> fk_rid, Nullable<int> fK_clientid)
+        public virtual int InsertSHORTURLData(string ipv4, string ipv6, string browser, string browser_version, string latitude, string longitude, string ipnum, string req_url, string useragent, string hostname, string isMobiledevice, Nullable<int> fk_uid, Nullable<int> fk_rid, Nullable<int> fK_clientid)
         {
             var ipv4Parameter = ipv4 != null ?
                 new ObjectParameter("ipv4", ipv4) :
@@ -91,6 +90,14 @@ namespace Analytics
                 new ObjectParameter("browser_version", browser_version) :
                 new ObjectParameter("browser_version", typeof(string));
     
+            var latitudeParameter = latitude != null ?
+                new ObjectParameter("latitude", latitude) :
+                new ObjectParameter("latitude", typeof(string));
+    
+            var longitudeParameter = longitude != null ?
+                new ObjectParameter("longitude", longitude) :
+                new ObjectParameter("longitude", typeof(string));
+    
             var ipnumParameter = ipnum != null ?
                 new ObjectParameter("ipnum", ipnum) :
                 new ObjectParameter("ipnum", typeof(string));
@@ -106,10 +113,6 @@ namespace Analytics
             var hostnameParameter = hostname != null ?
                 new ObjectParameter("hostname", hostname) :
                 new ObjectParameter("hostname", typeof(string));
-    
-            var deviceTypeParameter = deviceType != null ?
-                new ObjectParameter("DeviceType", deviceType) :
-                new ObjectParameter("DeviceType", typeof(string));
     
             var isMobiledeviceParameter = isMobiledevice != null ?
                 new ObjectParameter("IsMobiledevice", isMobiledevice) :
@@ -127,7 +130,7 @@ namespace Analytics
                 new ObjectParameter("FK_clientid", fK_clientid) :
                 new ObjectParameter("FK_clientid", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertSHORTURLData", ipv4Parameter, ipv6Parameter, browserParameter, browser_versionParameter, ipnumParameter, req_urlParameter, useragentParameter, hostnameParameter, deviceTypeParameter, isMobiledeviceParameter, fk_uidParameter, fk_ridParameter, fK_clientidParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertSHORTURLData", ipv4Parameter, ipv6Parameter, browserParameter, browser_versionParameter, latitudeParameter, longitudeParameter, ipnumParameter, req_urlParameter, useragentParameter, hostnameParameter, isMobiledeviceParameter, fk_uidParameter, fk_ridParameter, fK_clientidParameter);
         }
     
         public virtual int InsertUIDData(Nullable<int> fk_rid, Nullable<int> fk_clientid, string referencenumber, string longurl, string mobilenumber)
@@ -153,109 +156,6 @@ namespace Analytics
                 new ObjectParameter("mobilenumber", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertUIDData", fk_ridParameter, fk_clientidParameter, referencenumberParameter, longurlParameter, mobilenumberParameter);
-        }
-    
-        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var new_diagramnameParameter = new_diagramname != null ?
-                new ObjectParameter("new_diagramname", new_diagramname) :
-                new ObjectParameter("new_diagramname", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
-        }
-    
-        public virtual int sp_upgraddiagrams()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
     
         public virtual ObjectResult<spGetALLCOUNTS_Result> spGetALLCOUNTS(Nullable<int> filterBy, Nullable<System.DateTime> dateFrom, Nullable<System.DateTime> dateTo)
@@ -290,6 +190,33 @@ namespace Analytics
                 new ObjectParameter("rid", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<spGetALLCOUNTS1_Result>("spGetALLCOUNTS1", dateFromParameter, dateToParameter, ridParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> spGetCampaignSummary(string rid)
+        {
+            var ridParameter = rid != null ?
+                new ObjectParameter("rid", rid) :
+                new ObjectParameter("rid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetCampaignSummary", ridParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> spGetDashBoardSummary(Nullable<int> fkClientId)
+        {
+            var fkClientIdParameter = fkClientId.HasValue ?
+                new ObjectParameter("FkClientId", fkClientId) :
+                new ObjectParameter("FkClientId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetDashBoardSummary", fkClientIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> spGetDashBoardSummary1(Nullable<int> fkClientId)
+        {
+            var fkClientIdParameter = fkClientId.HasValue ?
+                new ObjectParameter("FkClientId", fkClientId) :
+                new ObjectParameter("FkClientId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("spGetDashBoardSummary1", fkClientIdParameter);
         }
     }
 }
