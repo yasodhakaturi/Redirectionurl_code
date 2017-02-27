@@ -4,6 +4,7 @@
     <EntitySetMapping Name="RIDDATAs">
       <EntityTypeMapping TypeName="shortenURLModel.RIDDATA">
         <MappingFragment StoreEntitySet="RIDDATA">
+          <ScalarProperty Name="CampaignName" ColumnName="CampaignName" />
           <ScalarProperty Name="EndDate" ColumnName="EndDate" />
           <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -18,6 +19,12 @@
     <EntitySetMapping Name="SHORTURLDATAs">
       <EntityTypeMapping TypeName="shortenURLModel.SHORTURLDATA">
         <MappingFragment StoreEntitySet="SHORTURLDATA">
+          <ScalarProperty Name="FK_City_Master_id" ColumnName="FK_City_Master_id" />
+          <ScalarProperty Name="MetroCode" ColumnName="MetroCode" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="ip_num" ColumnName="ip_num" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
           <ScalarProperty Name="FK_ClientID" ColumnName="FK_ClientID" />
           <ScalarProperty Name="FK_RID" ColumnName="FK_RID" />
@@ -36,7 +43,6 @@
           <ScalarProperty Name="Req_url" ColumnName="Req_url" />
           <ScalarProperty Name="Hostname" ColumnName="Hostname" />
           <ScalarProperty Name="DeviceType" ColumnName="DeviceType" />
-          <ScalarProperty Name="FK_UniqueID" ColumnName="FK_UniqueID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -51,21 +57,10 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UIDandRIDDatas">
-      <EntityTypeMapping TypeName="shortenURLModel.UIDandRIDData">
-        <MappingFragment StoreEntitySet="UIDandRIDData">
-          <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="Base64Value" ColumnName="Base64Value" />
-          <ScalarProperty Name="PK_UniqueId" ColumnName="PK_UniqueId" />
-          <ScalarProperty Name="TypeDiff" ColumnName="TypeDiff" />
-          <ScalarProperty Name="UIDorRID" ColumnName="UIDorRID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="UIDDATAs">
       <EntityTypeMapping TypeName="shortenURLModel.UIDDATA">
         <MappingFragment StoreEntitySet="UIDDATA">
+          <ScalarProperty Name="UniqueNumber" ColumnName="UniqueNumber" />
           <ScalarProperty Name="FK_ClientID" ColumnName="FK_ClientID" />
           <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
           <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -156,6 +151,58 @@
           <ScalarProperty Name="Role" ColumnName="Role" />
           <ScalarProperty Name="FKPersonId" ColumnName="FKPersonId" />
           <ScalarProperty Name="PKLoginHistoryId" ColumnName="PKLoginHistoryId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations_Data">
+      <EntityTypeMapping TypeName="shortenURLModel.Locations_Data">
+        <MappingFragment StoreEntitySet="Locations_Data">
+          <ScalarProperty Name="metroCode" ColumnName="metroCode" />
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="postalCode" ColumnName="postalCode" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="region" ColumnName="region" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="locId" ColumnName="locId" />
+          <ScalarProperty Name="PK_LOC_ID" ColumnName="PK_LOC_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Master_Location">
+      <EntityTypeMapping TypeName="shortenURLModel.Master_Location">
+        <MappingFragment StoreEntitySet="Master_Location">
+          <ScalarProperty Name="locId" ColumnName="locId" />
+          <ScalarProperty Name="endIpNum" ColumnName="endIpNum" />
+          <ScalarProperty Name="startIpNum" ColumnName="startIpNum" />
+          <ScalarProperty Name="End_IPv4_address" ColumnName="End_IPv4_address" />
+          <ScalarProperty Name="Start_IPv4_address" ColumnName="Start_IPv4_address" />
+          <ScalarProperty Name="PK_MASTERID" ColumnName="PK_MASTERID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tmp_rownum_update">
+      <EntityTypeMapping TypeName="shortenURLModel.tmp_rownum_update">
+        <MappingFragment StoreEntitySet="tmp_rownum_update">
+          <ScalarProperty Name="row_update" ColumnName="row_update" />
+          <ScalarProperty Name="PK_RowUpdate_ID" ColumnName="PK_RowUpdate_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="freeGeoipDatas">
+      <EntityTypeMapping TypeName="shortenURLModel.freeGeoipData">
+        <MappingFragment StoreEntitySet="freeGeoipData">
+          <ScalarProperty Name="MetroCode" ColumnName="MetroCode" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="ip_num" ColumnName="ip_num" />
+          <ScalarProperty Name="Ipv4" ColumnName="Ipv4" />
+          <ScalarProperty Name="PK_freeGeoip_id" ColumnName="PK_freeGeoip_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

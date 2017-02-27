@@ -5,16 +5,17 @@
       <PropertyRef Name="PK_Rid" />
     </Key>
     <Property Name="PK_Rid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ReferenceNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ReferenceNumber" Type="String" MaxLength="450" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="Pwd" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="SHORTURLDATAs" Relationship="shortenURLModel.FK_SHORTURLDATA_RIDDATA" FromRole="RIDDATA" ToRole="SHORTURLDATA" />
     <NavigationProperty Name="UIDDATAs" Relationship="shortenURLModel.FK_UIDDATA_RIDDATA" FromRole="RIDDATA" ToRole="UIDDATA" />
-    <Property Name="FK_ClientId" Type="Int32" />
+    <Property Name="FK_ClientId" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Client" Relationship="shortenURLModel.FK_RIDDATA_Client" FromRole="RIDDATA" ToRole="Client" />
     <Property Name="IsActive" Type="Boolean" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
     <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
     <Property Name="EndDate" Type="DateTime" Precision="3" />
+    <Property Name="CampaignName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="SHORTURLDATA">
     <Key>
@@ -31,8 +32,6 @@
     <Property Name="Req_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Hostname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="DeviceType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="FK_UniqueID" Type="Int32" />
-    <NavigationProperty Name="UIDandRIDData" Relationship="Self.FK_SHORTURLDATA_UIDandRIDData" FromRole="SHORTURLDATA" ToRole="UIDandRIDData" />
     <Property Name="UserAgent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="IsMobileDevice" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="Region" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -45,6 +44,12 @@
     <Property Name="FK_ClientID" Type="Int32" />
     <NavigationProperty Name="Client" Relationship="shortenURLModel.FK_SHORTURLDATA_Client" FromRole="SHORTURLDATA" ToRole="Client" />
     <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ip_num" Type="Int64" />
+    <Property Name="PostalCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Latitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Longitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MetroCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FK_City_Master_id" Type="Int32" />
   </EntityType>
   <EntityType Name="sysdiagram">
     <Key>
@@ -55,18 +60,6 @@
     <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="version" Type="Int32" />
     <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
-  <EntityType Name="UIDandRIDData">
-    <Key>
-      <PropertyRef Name="PK_UniqueId" />
-    </Key>
-    <Property Name="PK_UniqueId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="TypeDiff" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="UIDorRID" Type="Int32" />
-    <NavigationProperty Name="SHORTURLDATAs" Relationship="Self.FK_SHORTURLDATA_UIDandRIDData" FromRole="UIDandRIDData" ToRole="SHORTURLDATA" />
-    <Property Name="Base64Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-    <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="UIDDATA">
     <Key>
@@ -85,34 +78,19 @@
     <NavigationProperty Name="Client" Relationship="shortenURLModel.FK_UIDDATA_Client" FromRole="UIDDATA" ToRole="Client" />
     <NavigationProperty Name="UIDDATA1" Relationship="shortenURLModel.FK_UIDDATA_UIDDATA" FromRole="UIDDATA" ToRole="UIDDATA1" />
     <NavigationProperty Name="UIDDATA2" Relationship="shortenURLModel.FK_UIDDATA_UIDDATA" FromRole="UIDDATA1" ToRole="UIDDATA" />
+    <Property Name="UniqueNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
-  <Association Name="FK_SHORTURLDATA_UIDandRIDData">
-    <End Role="UIDandRIDData" Type="Self.UIDandRIDData" Multiplicity="0..1" />
-    <End Role="SHORTURLDATA" Type="Self.SHORTURLDATA" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UIDandRIDData">
-        <PropertyRef Name="PK_UniqueId" />
-      </Principal>
-      <Dependent Role="SHORTURLDATA">
-        <PropertyRef Name="FK_UniqueID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <EntityContainer Name="shortenURLEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="RIDDATAs" EntityType="Self.RIDDATA" />
     <EntitySet Name="SHORTURLDATAs" EntityType="Self.SHORTURLDATA" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-    <EntitySet Name="UIDandRIDDatas" EntityType="Self.UIDandRIDData" />
     <EntitySet Name="UIDDATAs" EntityType="Self.UIDDATA" />
-    <AssociationSet Name="FK_SHORTURLDATA_UIDandRIDData" Association="Self.FK_SHORTURLDATA_UIDandRIDData">
-      <End Role="UIDandRIDData" EntitySet="UIDandRIDDatas" />
-      <End Role="SHORTURLDATA" EntitySet="SHORTURLDATAs" />
-    </AssociationSet>
     <FunctionImport Name="InsertintoUIDRID">
       <Parameter Name="typediff" Mode="In" Type="String" />
       <Parameter Name="uidorrid" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="InsertRIDData">
+      <Parameter Name="CampaignName" Mode="In" Type="String" />
       <Parameter Name="referencenumber" Mode="In" Type="String" />
       <Parameter Name="pwd" Mode="In" Type="String" />
       <Parameter Name="clientid" Mode="In" Type="Int32" />
@@ -122,10 +100,7 @@
       <Parameter Name="ipv6" Mode="In" Type="String" />
       <Parameter Name="browser" Mode="In" Type="String" />
       <Parameter Name="browser_version" Mode="In" Type="String" />
-      <Parameter Name="city" Mode="In" Type="String" />
-      <Parameter Name="Region" Mode="In" Type="String" />
-      <Parameter Name="country" Mode="In" Type="String" />
-      <Parameter Name="countrycode" Mode="In" Type="String" />
+      <Parameter Name="ipnum" Mode="In" Type="String" />
       <Parameter Name="req_url" Mode="In" Type="String" />
       <Parameter Name="useragent" Mode="In" Type="String" />
       <Parameter Name="hostname" Mode="In" Type="String" />
@@ -134,7 +109,6 @@
       <Parameter Name="fk_uid" Mode="In" Type="Int32" />
       <Parameter Name="fk_rid" Mode="In" Type="Int32" />
       <Parameter Name="FK_clientid" Mode="In" Type="Int32" />
-      <Parameter Name="uniqueid" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="InsertUIDData">
       <Parameter Name="fk_rid" Mode="In" Type="Int32" />
@@ -218,6 +192,10 @@
       <End Role="UIDDATA" EntitySet="UIDDATAs" />
       <End Role="UIDDATA1" EntitySet="UIDDATAs" />
     </AssociationSet>
+    <EntitySet Name="Locations_Data" EntityType="shortenURLModel.Locations_Data" />
+    <EntitySet Name="Master_Location" EntityType="shortenURLModel.Master_Location" />
+    <EntitySet Name="tmp_rownum_update" EntityType="shortenURLModel.tmp_rownum_update" />
+    <EntitySet Name="freeGeoipDatas" EntityType="shortenURLModel.freeGeoipData" />
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -315,7 +293,7 @@
     <NavigationProperty Name="UIDDATAs" Relationship="shortenURLModel.FK_UIDDATA_Client" FromRole="Client" ToRole="UIDDATA" />
   </EntityType>
   <Association Name="FK_RIDDATA_Client">
-    <End Type="shortenURLModel.Client" Role="Client" Multiplicity="0..1" />
+    <End Type="shortenURLModel.Client" Role="Client" Multiplicity="1" />
     <End Type="shortenURLModel.RIDDATA" Role="RIDDATA" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Client">
@@ -372,4 +350,52 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="Locations_Data">
+    <Key>
+      <PropertyRef Name="PK_LOC_ID" />
+    </Key>
+    <Property Name="PK_LOC_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="locId" Type="Int32" Nullable="false" />
+    <Property Name="country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="region" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="city" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="postalCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="latitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="longitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="metroCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Master_Location">
+    <Key>
+      <PropertyRef Name="PK_MASTERID" />
+    </Key>
+    <Property Name="PK_MASTERID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Start_IPv4_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="End_IPv4_address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="startIpNum" Type="Int64" Nullable="false" />
+    <Property Name="endIpNum" Type="Int64" Nullable="false" />
+    <Property Name="locId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tmp_rownum_update">
+    <Key>
+      <PropertyRef Name="PK_RowUpdate_ID" />
+    </Key>
+    <Property Name="PK_RowUpdate_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="row_update" Type="Int64" />
+  </EntityType>
+  <EntityType Name="freeGeoipData">
+    <Key>
+      <PropertyRef Name="PK_freeGeoip_id" />
+    </Key>
+    <Property Name="PK_freeGeoip_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ipv4" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ip_num" Type="Int64" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CountryCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Region" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PostalCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Latitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Longitude" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MetroCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

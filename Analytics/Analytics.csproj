@@ -231,6 +231,9 @@
     <Compile Include="ErrorLog.cs">
       <DependentUpon>AnalyticsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="freeGeoipData.cs">
+      <DependentUpon>AnalyticsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -243,10 +246,19 @@
     <Compile Include="Helpers\Utility\Helper.cs" />
     <Compile Include="Helpers\Utility\SqlHelper.cs" />
     <Compile Include="IService1.cs" />
+    <Compile Include="Locations_Data.cs">
+      <DependentUpon>AnalyticsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="LoginHistory.cs">
       <DependentUpon>AnalyticsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Master_Location.cs">
+      <DependentUpon>AnalyticsModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CountryCityModel.cs" />
+    <Compile Include="Models\DeviceInfo.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\List_IP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RIDDATA.cs">
       <DependentUpon>AnalyticsModel.tt</DependentUpon>
@@ -273,6 +285,9 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>AnalyticsModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="tmp_rownum_update.cs">
+      <DependentUpon>AnalyticsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="UIDDATA.cs">
       <DependentUpon>AnalyticsModel.tt</DependentUpon>
     </Compile>
@@ -285,6 +300,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="404.html" />
     <Content Include="App_Data\APIKey.xml" />
     <Content Include="Content\angular-block-ui.css" />
     <Content Include="Content\angular-block-ui.min.css" />

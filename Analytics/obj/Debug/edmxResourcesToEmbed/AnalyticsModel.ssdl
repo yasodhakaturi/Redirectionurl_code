@@ -25,6 +25,36 @@
     <Property Name="StackTrace" Type="nvarchar(max)" />
     <Property Name="ErrorMessage" Type="nvarchar(max)" />
   </EntityType>
+  <EntityType Name="freeGeoipData">
+    <Key>
+      <PropertyRef Name="PK_freeGeoip_id" />
+    </Key>
+    <Property Name="PK_freeGeoip_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ipv4" Type="nvarchar(max)" />
+    <Property Name="ip_num" Type="bigint" />
+    <Property Name="Country" Type="nvarchar" MaxLength="50" />
+    <Property Name="CountryCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="Region" Type="nvarchar" MaxLength="50" />
+    <Property Name="PostalCode" Type="nvarchar(max)" />
+    <Property Name="Latitude" Type="nvarchar(max)" />
+    <Property Name="Longitude" Type="nvarchar(max)" />
+    <Property Name="MetroCode" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Locations_Data">
+    <Key>
+      <PropertyRef Name="PK_LOC_ID" />
+    </Key>
+    <Property Name="PK_LOC_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="locId" Type="int" Nullable="false" />
+    <Property Name="country" Type="nvarchar(max)" />
+    <Property Name="region" Type="nvarchar(max)" />
+    <Property Name="city" Type="nvarchar(max)" />
+    <Property Name="postalCode" Type="nvarchar(max)" />
+    <Property Name="latitude" Type="nvarchar(max)" />
+    <Property Name="longitude" Type="nvarchar(max)" />
+    <Property Name="metroCode" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="LoginHistory">
     <Key>
       <PropertyRef Name="PKLoginHistoryId" />
@@ -35,18 +65,30 @@
     <Property Name="IpAddress" Type="nvarchar(max)" />
     <Property Name="LoginDateTime" Type="datetime" />
   </EntityType>
+  <EntityType Name="Master_Location">
+    <Key>
+      <PropertyRef Name="PK_MASTERID" />
+    </Key>
+    <Property Name="PK_MASTERID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Start_IPv4_address" Type="nvarchar(max)" />
+    <Property Name="End_IPv4_address" Type="nvarchar(max)" />
+    <Property Name="startIpNum" Type="bigint" Nullable="false" />
+    <Property Name="endIpNum" Type="bigint" Nullable="false" />
+    <Property Name="locId" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="RIDDATA">
     <Key>
       <PropertyRef Name="PK_Rid" />
     </Key>
     <Property Name="PK_Rid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ReferenceNumber" Type="nvarchar(max)" />
+    <Property Name="CampaignName" Type="nvarchar(max)" />
+    <Property Name="ReferenceNumber" Type="nvarchar" MaxLength="450" Nullable="false" />
     <Property Name="Pwd" Type="nvarchar(max)" />
     <Property Name="IsActive" Type="bit" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="EndDate" Type="datetime" />
     <Property Name="UpdatedDate" Type="datetime" />
-    <Property Name="FK_ClientId" Type="int" />
+    <Property Name="FK_ClientId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="SHORTURLDATA">
     <Key>
@@ -55,12 +97,17 @@
     <Property Name="PK_Shorturl" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Ipv4" Type="nvarchar(max)" />
     <Property Name="Ipv6" Type="nvarchar(max)" />
+    <Property Name="ip_num" Type="bigint" />
     <Property Name="Browser" Type="nvarchar" MaxLength="50" />
     <Property Name="Browser_version" Type="nvarchar" MaxLength="50" />
     <Property Name="City" Type="nvarchar" MaxLength="50" />
     <Property Name="Region" Type="nvarchar" MaxLength="50" />
     <Property Name="Country" Type="nvarchar" MaxLength="50" />
     <Property Name="CountryCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="PostalCode" Type="nvarchar(max)" />
+    <Property Name="Latitude" Type="nvarchar(max)" />
+    <Property Name="Longitude" Type="nvarchar(max)" />
+    <Property Name="MetroCode" Type="nvarchar(max)" />
     <Property Name="Req_url" Type="nvarchar(max)" />
     <Property Name="UserAgent" Type="nvarchar(max)" />
     <Property Name="Hostname" Type="nvarchar" MaxLength="50" />
@@ -70,7 +117,7 @@
     <Property Name="FK_Uid" Type="int" />
     <Property Name="FK_RID" Type="int" />
     <Property Name="FK_ClientID" Type="int" />
-    <Property Name="FK_UniqueID" Type="int" />
+    <Property Name="FK_City_Master_id" Type="int" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -82,16 +129,12 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
-  <EntityType Name="UIDandRIDData">
+  <EntityType Name="tmp_rownum_update">
     <Key>
-      <PropertyRef Name="PK_UniqueId" />
+      <PropertyRef Name="PK_RowUpdate_ID" />
     </Key>
-    <Property Name="PK_UniqueId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TypeDiff" Type="nvarchar(max)" />
-    <Property Name="UIDorRID" Type="int" />
-    <Property Name="CreatedDate" Type="datetime" />
-    <Property Name="UpdatedDate" Type="datetime" />
-    <Property Name="Base64Value" Type="nvarchar(max)" />
+    <Property Name="PK_RowUpdate_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="row_update" Type="bigint" />
   </EntityType>
   <EntityType Name="UIDDATA">
     <Key>
@@ -105,9 +148,10 @@
     <Property Name="MobileNumber" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="UpdatedDate" Type="datetime" />
+    <Property Name="UniqueNumber" Type="nvarchar(max)" />
   </EntityType>
   <Association Name="FK_RIDDATA_Client">
-    <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
     <End Role="RIDDATA" Type="Self.RIDDATA" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Client">
@@ -154,30 +198,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_SHORTURLDATA_SHORTURLDATA1">
-    <End Role="SHORTURLDATA" Type="Self.SHORTURLDATA" Multiplicity="1" />
-    <End Role="SHORTURLDATA1" Type="Self.SHORTURLDATA" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="SHORTURLDATA">
-        <PropertyRef Name="PK_Shorturl" />
-      </Principal>
-      <Dependent Role="SHORTURLDATA1">
-        <PropertyRef Name="PK_Shorturl" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SHORTURLDATA_UIDandRIDData">
-    <End Role="UIDandRIDData" Type="Self.UIDandRIDData" Multiplicity="0..1" />
-    <End Role="SHORTURLDATA" Type="Self.SHORTURLDATA" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UIDandRIDData">
-        <PropertyRef Name="PK_UniqueId" />
-      </Principal>
-      <Dependent Role="SHORTURLDATA">
-        <PropertyRef Name="FK_UniqueID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_SHORTURLDATA_UIDDATA">
     <End Role="UIDDATA" Type="Self.UIDDATA" Multiplicity="0..1" />
     <End Role="SHORTURLDATA" Type="Self.SHORTURLDATA" Multiplicity="*" />
@@ -187,30 +207,6 @@
       </Principal>
       <Dependent Role="SHORTURLDATA">
         <PropertyRef Name="FK_Uid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UIDDATA_Client">
-    <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
-    <End Role="UIDDATA" Type="Self.UIDDATA" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Client">
-        <PropertyRef Name="PK_ClientID" />
-      </Principal>
-      <Dependent Role="UIDDATA">
-        <PropertyRef Name="FK_ClientID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UIDDATA_RIDDATA">
-    <End Role="RIDDATA" Type="Self.RIDDATA" Multiplicity="0..1" />
-    <End Role="UIDDATA" Type="Self.UIDDATA" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="RIDDATA">
-        <PropertyRef Name="PK_Rid" />
-      </Principal>
-      <Dependent Role="UIDDATA">
-        <PropertyRef Name="FK_RID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -232,7 +228,8 @@
     <Parameter Name="uidorrid" Type="int" Mode="In" />
   </Function>
   <Function Name="InsertRIDData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-    <Parameter Name="referencenumber" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="CampaignName" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="referencenumber" Type="nvarchar" Mode="In" />
     <Parameter Name="pwd" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="clientid" Type="int" Mode="In" />
   </Function>
@@ -241,10 +238,7 @@
     <Parameter Name="ipv6" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="browser" Type="nvarchar" Mode="In" />
     <Parameter Name="browser_version" Type="nvarchar" Mode="In" />
-    <Parameter Name="city" Type="nvarchar" Mode="In" />
-    <Parameter Name="Region" Type="nvarchar" Mode="In" />
-    <Parameter Name="country" Type="nvarchar" Mode="In" />
-    <Parameter Name="countrycode" Type="nvarchar" Mode="In" />
+    <Parameter Name="ipnum" Type="nvarchar" Mode="In" />
     <Parameter Name="req_url" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="useragent" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="hostname" Type="nvarchar" Mode="In" />
@@ -253,7 +247,6 @@
     <Parameter Name="fk_uid" Type="int" Mode="In" />
     <Parameter Name="fk_rid" Type="int" Mode="In" />
     <Parameter Name="FK_clientid" Type="int" Mode="In" />
-    <Parameter Name="uniqueid" Type="int" Mode="In" />
   </Function>
   <Function Name="InsertUIDData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="fk_rid" Type="int" Mode="In" />
@@ -305,11 +298,14 @@
   <EntityContainer Name="shortenURLModelStoreContainer">
     <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ErrorLog" EntityType="Self.ErrorLog" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="freeGeoipData" EntityType="Self.freeGeoipData" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Locations_Data" EntityType="Self.Locations_Data" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LoginHistory" EntityType="Self.LoginHistory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Master_Location" EntityType="Self.Master_Location" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RIDDATA" EntityType="Self.RIDDATA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SHORTURLDATA" EntityType="Self.SHORTURLDATA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="UIDandRIDData" EntityType="Self.UIDandRIDData" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tmp_rownum_update" EntityType="Self.tmp_rownum_update" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UIDDATA" EntityType="Self.UIDDATA" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_RIDDATA_Client" Association="Self.FK_RIDDATA_Client">
       <End Role="Client" EntitySet="Client" />
@@ -327,25 +323,9 @@
       <End Role="SHORTURLDATA" EntitySet="SHORTURLDATA" />
       <End Role="SHORTURLDATA1" EntitySet="SHORTURLDATA" />
     </AssociationSet>
-    <AssociationSet Name="FK_SHORTURLDATA_SHORTURLDATA1" Association="Self.FK_SHORTURLDATA_SHORTURLDATA1">
-      <End Role="SHORTURLDATA" EntitySet="SHORTURLDATA" />
-      <End Role="SHORTURLDATA1" EntitySet="SHORTURLDATA" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SHORTURLDATA_UIDandRIDData" Association="Self.FK_SHORTURLDATA_UIDandRIDData">
-      <End Role="UIDandRIDData" EntitySet="UIDandRIDData" />
-      <End Role="SHORTURLDATA" EntitySet="SHORTURLDATA" />
-    </AssociationSet>
     <AssociationSet Name="FK_SHORTURLDATA_UIDDATA" Association="Self.FK_SHORTURLDATA_UIDDATA">
       <End Role="UIDDATA" EntitySet="UIDDATA" />
       <End Role="SHORTURLDATA" EntitySet="SHORTURLDATA" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UIDDATA_Client" Association="Self.FK_UIDDATA_Client">
-      <End Role="Client" EntitySet="Client" />
-      <End Role="UIDDATA" EntitySet="UIDDATA" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UIDDATA_RIDDATA" Association="Self.FK_UIDDATA_RIDDATA">
-      <End Role="RIDDATA" EntitySet="RIDDATA" />
-      <End Role="UIDDATA" EntitySet="UIDDATA" />
     </AssociationSet>
     <AssociationSet Name="FK_UIDDATA_UIDDATA" Association="Self.FK_UIDDATA_UIDDATA">
       <End Role="UIDDATA" EntitySet="UIDDATA" />
