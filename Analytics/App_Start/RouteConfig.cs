@@ -30,15 +30,15 @@ namespace Analytics
             routes.MapRoute(
            name: "Login",
            url: "{id}",
-           defaults: new { controller = "Home", action = "LoginRid" }
+           defaults: new { controller = "Home", action = "GPS" }
        );
 
 
-           // routes.MapRoute(
-           //    name: "Default",
-           //    url: "{controller}/{action}/{id}",
-           //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-           //);
+            routes.MapRoute(
+               name: "Default",
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+           );
 
             //routes.MapRoute(
             //    name: "Default",

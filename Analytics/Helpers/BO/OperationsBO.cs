@@ -251,7 +251,7 @@ namespace Analytics.Helpers.BO
             }
             return strIpAddress;
         }
-        public void Monitize(string Shorturl)
+        public void Monitize(string Shorturl, string latitude, string longitude)
         {
             try
 
@@ -270,7 +270,7 @@ namespace Analytics.Helpers.BO
                     //int? Fk_UID = (from u in dc.UIDandRIDDatas
                     //               where u.PK_UniqueId == Uniqueid_SHORTURLDATA && u.TypeDiff == "1"
                     //               select u.UIDorRID).SingleOrDefault();
-                    if (longurl != null && !longurl.StartsWith("http://") && !longurl.StartsWith("https://"))
+                    if (longurl != null && !longurl.ToLower().StartsWith("http:") && !longurl.ToLower().StartsWith("https:"))
                         HttpContext.Current.Response.Redirect("http://" + longurl);
                     else
                         HttpContext.Current.Response.Redirect(longurl);
@@ -291,12 +291,12 @@ namespace Analytics.Helpers.BO
                     //string[] header_array = HttpContext.Current.Request.Headers.AllKeys;
                     string useragent = HttpContext.Current.Request.UserAgent;
                     string hostname = HttpContext.Current.Request.UserHostName;
-                    string devicetype = HttpContext.Current.Request.Browser.Platform;
+                    //string devicetype = HttpContext.Current.Request.Browser.Platform;
                     string ismobiledevice = HttpContext.Current.Request.Browser.IsMobileDevice.ToString();
                     if(ipv4!="::1" && ipv4!=null&&ipv4!="")
                      ipnum = convertAddresstoNumber(ipv4);
 
-                    ipnum = convertAddresstoNumber("192.168.1.64");
+                    //ipnum = convertAddresstoNumber("192.168.1.64");
 
 
                     //retrive city,country
@@ -333,7 +333,7 @@ namespace Analytics.Helpers.BO
                     //    }
                     //}
                     //new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, browser, browserversion, City, Region, Country, CountryCode, req_url, useragent, hostname, devicetype, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
-                    new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, ipnum,browser, browserversion, req_url, useragent, hostname, devicetype, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
+                    new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, ipnum,browser, browserversion, req_url, useragent, hostname, latitude,longitude, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
 
                 }
                 //WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;

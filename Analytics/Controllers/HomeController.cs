@@ -326,29 +326,13 @@ namespace Analytics.Controllers
 
 
         }
-        public ActionResult LoginRid()
-        // public ActionResult LoginRid(string latitude, string longitude)
+        //public ActionResult LoginRid()
+        public ActionResult LoginRid(string latitude, string longitude)
         {
             try
             {
                 string rid_param = ""; int rid_shorturl = 0; int rid_cookie = 0;
-                //if (Convert.ToBoolean(chkRemember) == true)
-                //{
-                //HttpCookie Logincookie = Request.Cookies["AnalyticsLogin"];
-
-                //if (Logincookie != null)
-                //    {
-                //        byte[] hash = Helper.GetHashKey("yasodha.bitra@gmail.com" + "Analytics");
-                //        string credentials = Helper.DecryptQueryString(hash, Logincookie.Value);
-                //        string[] cred = credentials.Split('~');
-                //         rid_param = cred[0];
-                //        string password = cred[1];
-                //        rid_cookie = Convert.ToInt32(rid_param);
-
-                //    }
-                //}
-                //if (rid_param == "" && rid_shorturl == 0)
-                //{
+                
                 if (Request.UrlReferrer != null)
                     rid_param = Request.UrlReferrer.LocalPath;
                 else
@@ -358,36 +342,11 @@ namespace Analytics.Controllers
                 if (rid_param.Contains(@"\"))
                     rid_param = rid_param.Replace(@"\", "");
                 rid_param = rid_param.Trim();
-                //long decodedvalue = new ConvertionBO().BaseToLong(rid_param);
-                //rid_shorturl = Convert.ToInt32(decodedvalue);
-                //string base64 = new ConvertionBO().LongToBase(Convert.ToInt32(rid_param));
-                //}
-                // PWDDataBO obj = new OperationsBO().GetUIDRIDDATA(rid_shorturl);
-                //if (obj != null && obj.typediff == "2" && obj.pwd != "" && obj.pwd != null)
-                //{
-                //    if (Logincookie == null)
-                //        return View();
-                //    else
-                //    {
-                //        if (rid_shorturl == rid_cookie)
-                //            Response.Redirect("~/Analytics?rid=" + rid_param);
-                //        else
-                //            return View();
-                //    }
+               
 
-                //}
-                //else if (obj != null && obj.typediff == "2" && (obj.pwd == "" || obj.pwd == null))
-                //{
-                //    //Response.Redirect("~/Analytics/Index?rid=" + rid_shorturl); 
-                //    Response.Redirect("~/Analytics?rid=" + rid_param); 
-
-                //}
-                //else 
-                //    if (obj != null && obj.typediff == "1")
-                //{
                 //call monitize service here
-                new OperationsBO().Monitize(rid_param);
-                // }
+                new OperationsBO().Monitize(rid_param,latitude,longitude);
+                
                 return View();
             }
             catch (Exception ex)
