@@ -336,6 +336,10 @@ namespace Analytics.Helpers.BO
                     new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, ipnum,browser, browserversion, req_url, useragent, hostname, latitude,longitude, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
 
                 }
+                else
+                {
+                    HttpContext.Current.Response.Redirect("../404.html");
+                }
                 //WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
                 //if (!longurl.StartsWith("http://") && !longurl.StartsWith("https://"))
                 //    WebOperationContext.Current.OutgoingResponse.Headers.Add("Location", "http://" + longurl);
