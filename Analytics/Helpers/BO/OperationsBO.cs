@@ -287,7 +287,7 @@ namespace Analytics.Helpers.BO
                     string ipv6 = HttpContext.Current.Request.UserHostAddress;
                     string browser = HttpContext.Current.Request.Browser.Browser;
                     string browserversion = HttpContext.Current.Request.Browser.Version;
-                    string req_url = HttpContext.Current.Request.Url.ToString();
+                    string req_url = HttpContext.Current.Request.UrlReferrer.ToString();
                     //string[] header_array = HttpContext.Current.Request.Headers.AllKeys;
                     string useragent = HttpContext.Current.Request.UserAgent;
                     string hostname = HttpContext.Current.Request.UserHostName;
