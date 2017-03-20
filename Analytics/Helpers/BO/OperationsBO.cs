@@ -281,6 +281,8 @@ namespace Analytics.Helpers.BO
                     int? FK_clientid = (from r in dc.RIDDATAs
                                         where r.PK_Rid == FK_RID
                                         select r.FK_ClientId).SingleOrDefault();
+                    //int? FK_clientid=objr.FK_ClientId;
+
                     //retrive ipaddress and browser
                     //string ipv4 = new ConvertionBO().GetIP4Address();
                     string ipv4 = IpAddress();
@@ -334,11 +336,17 @@ namespace Analytics.Helpers.BO
                     //}
                     //new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, browser, browserversion, City, Region, Country, CountryCode, req_url, useragent, hostname, devicetype, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
                     new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, ipnum,browser, browserversion, req_url, useragent, hostname, latitude,longitude, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
-
+                    //UserInfo obj_userinfo = new UserInfo();
+                    //obj_userinfo.UserId = uid_obj.FK_ClientID;
+                    //obj_userinfo.UserName = dc.Clients.Where(c => c.PK_ClientID == uid_obj.FK_ClientID).Select(x => x.UserName).SingleOrDefault();
+                    //obj_userinfo.MobileNumber = uid_obj.MobileNumber;
+                    //obj_userinfo.CampaingName = objr.CampaignName;
+                    //return obj_userinfo;
                 }
                 else
                 {
                     HttpContext.Current.Response.Redirect("../404.html");
+                    //return null;
                 }
                 //WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
                 //if (!longurl.StartsWith("http://") && !longurl.StartsWith("https://"))
@@ -356,7 +364,7 @@ namespace Analytics.Helpers.BO
             catch (Exception ex)
             {
                 ErrorLogs.LogErrorData(ex.StackTrace, ex.InnerException.ToString());
-
+                //return null;
             }
         }
 
