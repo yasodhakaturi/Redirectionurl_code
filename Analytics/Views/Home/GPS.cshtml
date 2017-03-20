@@ -11,22 +11,34 @@
 <head>
 
     <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    (function (i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-        //ga('create', 'UA-93490642-1', 'auto');
-        //ga('send', 'pageview');
-        ga('create', 'UA-93490642-1',{'UserID':@Model.UserId,'UserName':@Model.UserName,'MobileNumber':@Model.MobileNumber,'CampaignName':@Model.CampaingName});
-        ga('require','displayfeatures');
-        ga('set', 'dimension1', @Model.UserId);
-        ga('set', 'dimension2', @Model.UserName);
-        ga('set', 'dimension3', @Model.MobileNumber);
-        ga('set', 'dimension4', @Model.CampaingName);
-        ga('send', 'pageview');
+    //ga('create', 'UA-93490642-1', 'auto');
+    //ga('send', 'pageview');
+    ga('create', 'UA-93490642-1',{'UserID':@Model.UserId});
+    ga('require','displayfeatures');
+    ga('set', 'dimension1', @Model.UserId);
+    ga('send', 'pageview');
+
+    ga('create', 'UA-93490642-1',{'UserName':@Model.UserName});
+    ga('require','displayfeatures');
+    ga('set', 'dimension2', @Model.UserName);
+    ga('send', 'pageview');
+
+    ga('create', 'UA-93490642-1',{'MobileNumber':@Model.MobileNumber});
+    ga('require','displayfeatures');
+    ga('set', 'dimension3', @Model.MobileNumber);
+    ga('send', 'pageview');
+
+    ga('create', 'UA-93490642-1',{'CampaignName':@Model.CampaingName});
+    ga('require','displayfeatures');
+    ga('set', 'dimension4', @Model.CampaingName);
+    ga('send', 'pageview');
 
     </script>
     <script type="text/javascript">
