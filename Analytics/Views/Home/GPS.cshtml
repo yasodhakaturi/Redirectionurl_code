@@ -20,7 +20,7 @@
 
     //ga('create', 'UA-93490642-1', 'auto');
         //ga('send', 'pageview');
-    if(@Model!=null)
+    if(Model.Content.Any())
     {
         ga('create', 'UA-93490642-1',{'UserID':@Model.UserId});
         ga('require','displayfeatures');
