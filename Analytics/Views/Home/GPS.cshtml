@@ -19,27 +19,29 @@
     })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
     //ga('create', 'UA-93490642-1', 'auto');
-    //ga('send', 'pageview');
-    ga('create', 'UA-93490642-1',{'UserID':@Model.UserId});
-    ga('require','displayfeatures');
-    ga('set', 'dimension1', @Model.UserId);
-    ga('send', 'pageview');
+        //ga('send', 'pageview');
+    if(@Model!=null)
+    {
+        ga('create', 'UA-93490642-1',{'UserID':@Model.UserId});
+        ga('require','displayfeatures');
+        ga('set', 'dimension1', @Model.UserId);
+        ga('send', 'pageview');
 
-    ga('create', 'UA-93490642-1',{'UserName':'@Model.UserName'});
-    ga('require','displayfeatures');
-    ga('set', 'dimension2', "@Model.UserName");
-    ga('send', 'pageview');
+        ga('create', 'UA-93490642-1',{'UserName':'@Model.UserName'});
+        ga('require','displayfeatures');
+        ga('set', 'dimension2', "@Model.UserName");
+        ga('send', 'pageview');
 
-    ga('create', 'UA-93490642-1',{'MobileNumber':'@Model.MobileNumber'});
-    ga('require','displayfeatures');
-    ga('set', 'dimension3', @Model.MobileNumber);
-    ga('send', 'pageview');
+        ga('create', 'UA-93490642-1',{'MobileNumber':'@Model.MobileNumber'});
+        ga('require','displayfeatures');
+        ga('set', 'dimension3', @Model.MobileNumber);
+        ga('send', 'pageview');
 
-    ga('create', 'UA-93490642-1',{'CampaignName':'@Model.CampaingName'});
-    ga('require','displayfeatures');
-    ga('set', 'dimension4', "@Model.CampaingName");
-    ga('send', 'pageview');
-
+        ga('create', 'UA-93490642-1',{'CampaignName':'@Model.CampaingName'});
+        ga('require','displayfeatures');
+        ga('set', 'dimension4', "@Model.CampaingName");
+        ga('send', 'pageview');
+    }
     </script>
     <script type="text/javascript">
         window.onload = function () {
