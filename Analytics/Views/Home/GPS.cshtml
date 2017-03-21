@@ -22,6 +22,8 @@
         //ga('send', 'pageview');
     if (Model.Content != null && Model.Content.Count>0)
     {
+        alert(Model.Content);
+        alert(@Model.UserId);
         ga('create', 'UA-93490642-1',{'UserID':@Model.UserId});
         ga('require','displayfeatures');
         ga('set', 'dimension1', @Model.UserId);
@@ -42,7 +44,7 @@
         ga('set', 'dimension4', "@Model.CampaingName");
         ga('send', 'pageview');
     }
-    </script>
+</script>
     <script type="text/javascript">
         window.onload = function () {
             function success(position) {
