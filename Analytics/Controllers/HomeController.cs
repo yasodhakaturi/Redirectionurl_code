@@ -28,30 +28,30 @@ namespace Analytics.Controllers
         }
         public ActionResult GPS()
         {
-            //string rid_param = ""; int rid_shorturl = 0; int rid_cookie = 0;
+            string rid_param = ""; int rid_shorturl = 0; int rid_cookie = 0;
 
-            //if (Request.Url != null)
-            //    rid_param = Request.Url.AbsolutePath;
-            //else
-            //    rid_param = Request.Path;
-            //if (rid_param.Contains("/"))
-            //    rid_param = rid_param.Replace("/", "");
-            //if (rid_param.Contains(@"\"))
-            //    rid_param = rid_param.Replace(@"\", "");
-            //rid_param = rid_param.Trim();
-            //UserInfo obj_userinfo = (from u in dc.UIDDATAs
-            //                         join r in dc.RIDDATAs on u.FK_RID equals r.PK_Rid
-            //                         join c in dc.Clients on r.FK_ClientId equals c.PK_ClientID
-            //                         where u.UniqueNumber==rid_param
-            //                         select new UserInfo()
-            //                         {
-            //                             UserId = c.PK_ClientID,
-            //                             UserName = c.UserName,
-            //                             MobileNumber = u.MobileNumber,
-            //                             CampaingName = r.CampaignName
-            //                         }).SingleOrDefault();
-            //return View(obj_userinfo);
-            return View();
+            if (Request.Url != null)
+                rid_param = Request.Url.AbsolutePath;
+            else
+                rid_param = Request.Path;
+            if (rid_param.Contains("/"))
+                rid_param = rid_param.Replace("/", "");
+            if (rid_param.Contains(@"\"))
+                rid_param = rid_param.Replace(@"\", "");
+            rid_param = rid_param.Trim();
+            UserInfo obj_userinfo = (from u in dc.UIDDATAs
+                                     join r in dc.RIDDATAs on u.FK_RID equals r.PK_Rid
+                                     join c in dc.Clients on r.FK_ClientId equals c.PK_ClientID
+                                     where u.UniqueNumber == rid_param
+                                     select new UserInfo()
+                                     {
+                                         UserId = c.PK_ClientID,
+                                         UserName = c.UserName,
+                                         MobileNumber = u.MobileNumber,
+                                         CampaingName = r.CampaignName
+                                     }).SingleOrDefault();
+            return View(obj_userinfo);
+            //return View();
         }
 
         //private static readonly char[] BaseChars =
