@@ -263,7 +263,11 @@ namespace Analytics.Helpers.BO
                 int Fk_UID = 0;
                 UIDDATA uid_obj = new UIDDATA();
                 UserInfo obj_userinfo = new UserInfo();
-                uid_obj = new OperationsBO().CheckUniqueid(Shorturl);
+                //uid_obj = new OperationsBO().CheckUniqueid(Shorturl);
+                uid_obj = (from u in dc.UIDDATAs
+                           join r in dc.RIDDATAs on u.FK_RID equals r.PK_Rid
+                           where u.UniqueNumber == Shorturl
+                           select u).SingleOrDefault();
                 //if (new OperationsBO().CheckUniqueid(Shorturl))
                 if (uid_obj != null)
                 {
@@ -377,6 +381,7 @@ namespace Analytics.Helpers.BO
             catch (Exception ex)
             {
                 ErrorLogs.LogErrorData(ex.StackTrace, ex.InnerException.ToString());
+                HttpContext.Current.Response.Redirect("../404.html");
                 return null;
             }
         }
