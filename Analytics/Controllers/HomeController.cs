@@ -368,9 +368,9 @@ namespace Analytics.Controllers
                
 
                 //call monitize service here
-                //new OperationsBO().Monitize(rid_param,latitude,longitude);
-                UserInfo obj_userinfo = new OperationsBO().Monitize(rid_param, latitude, longitude);
-                return View(obj_userinfo);
+                new OperationsBO().Monitize(rid_param,latitude,longitude);
+                //UserInfo obj_userinfo = new OperationsBO().Monitize(rid_param, latitude, longitude);
+                return View();
             }
             catch (Exception ex)
             {

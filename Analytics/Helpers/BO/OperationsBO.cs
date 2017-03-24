@@ -251,8 +251,8 @@ namespace Analytics.Helpers.BO
             }
             return strIpAddress;
         }
-        //public void Monitize(string Shorturl, string latitude, string longitude)
-        public UserInfo Monitize(string Shorturl, string latitude, string longitude)
+        public void Monitize(string Shorturl, string latitude, string longitude)
+        //public UserInfo Monitize(string Shorturl, string latitude, string longitude)
         {
             try
 
@@ -342,28 +342,17 @@ namespace Analytics.Helpers.BO
                     //}
                     //new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, browser, browserversion, City, Region, Country, CountryCode, req_url, useragent, hostname, devicetype, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
                     new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, ipnum,browser, browserversion, req_url, useragent, hostname, latitude,longitude, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
-                    obj_userinfo.UserId = uid_obj.FK_ClientID;
-                    obj_userinfo.UserName = dc.Clients.Where(c => c.PK_ClientID == uid_obj.FK_ClientID).Select(x => x.UserName).SingleOrDefault();
-                    obj_userinfo.MobileNumber = uid_obj.MobileNumber;
-                    obj_userinfo.CampaingName = objr.CampaignName;
-                    return obj_userinfo;
-                    //UserInfo obj_userinfo = (from u in dc.UIDDATAs
-                    //                         join r in dc.RIDDATAs on u.FK_RID equals r.PK_Rid
-                    //                         join c in dc.Clients on r.FK_ClientId equals c.PK_ClientID
-                    //                         where u.UniqueNumber == Shorturl
-                    //                         select new UserInfo()
-                    //                         {
-                    //                             UserId = c.PK_ClientID,
-                    //                             UserName = c.UserName,
-                    //                             MobileNumber = u.MobileNumber,
-                    //                             CampaingName = r.CampaignName
-                    //                         }).SingleOrDefault();
+                    //obj_userinfo.UserId = uid_obj.FK_ClientID;
+                    //obj_userinfo.UserName = dc.Clients.Where(c => c.PK_ClientID == uid_obj.FK_ClientID).Select(x => x.UserName).SingleOrDefault();
+                    //obj_userinfo.MobileNumber = uid_obj.MobileNumber;
+                    //obj_userinfo.CampaingName = objr.CampaignName;
                     //return obj_userinfo;
+                   
                 }
                 else
                 {
                     HttpContext.Current.Response.Redirect("../404.html");
-                    return obj_userinfo;
+                    //return obj_userinfo;
                 }
                 //WebOperationContext.Current.OutgoingResponse.StatusCode = System.Net.HttpStatusCode.Redirect;
                 //if (!longurl.StartsWith("http://") && !longurl.StartsWith("https://"))
@@ -382,7 +371,7 @@ namespace Analytics.Helpers.BO
             {
                 ErrorLogs.LogErrorData(ex.StackTrace, ex.InnerException.ToString());
                 HttpContext.Current.Response.Redirect("../404.html");
-                return null;
+                //return null;
             }
         }
 
