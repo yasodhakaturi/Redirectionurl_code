@@ -17,8 +17,8 @@ namespace Analytics
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RIDDATA()
         {
-            this.SHORTURLDATAs = new HashSet<SHORTURLDATA>();
             this.UIDDATAs = new HashSet<UIDDATA>();
+            this.SHORTURLDATAs = new HashSet<SHORTURLDATA>();
         }
     
         public int PK_Rid { get; set; }
@@ -30,11 +30,12 @@ namespace Analytics
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public string CampaignName { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SHORTURLDATA> SHORTURLDATAs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UIDDATA> UIDDATAs { get; set; }
         public virtual Client Client { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SHORTURLDATA> SHORTURLDATAs { get; set; }
     }
 }

@@ -260,9 +260,23 @@ namespace Analytics.Helpers.BO
                 string longurl = ""; string ipnum = "";
                 //long decodedvalue = new ConvertionBO().BaseToLong(Shorturl);
                 //int Uniqueid_SHORTURLDATA = Convert.ToInt32(decodedvalue);
-                int Fk_UID = 0;
+                int Fk_UID = 0; string Cookievalue = "";
                 UIDDATA uid_obj = new UIDDATA();
                 UserInfo obj_userinfo = new UserInfo();
+                if (HttpContext.Current.Request.Cookies["VisitorCookie"] == null)
+                {
+                    Random randNum = new Random();
+                    int r = randNum.Next(00000, 99999);
+                        Cookievalue = r.ToString("D5");
+                    HttpCookie myCookie = new HttpCookie("VisitorCookie");
+                    // Set the cookie value.
+                    myCookie.Value = Cookievalue;
+                    // Set the cookie expiration date.
+                    myCookie.Expires = DateTime.Now.AddYears(1);
+                    // Add the cookie.
+                    HttpContext.Current.Response.Cookies.Add(myCookie);
+                   
+                }
                 //uid_obj = new OperationsBO().CheckUniqueid(Shorturl);
                 uid_obj = (from u in dc.UIDDATAs
                            join r in dc.RIDDATAs on u.FK_RID equals r.PK_Rid
@@ -272,82 +286,63 @@ namespace Analytics.Helpers.BO
                 if (uid_obj != null)
                 {
                     longurl = uid_obj.Longurl;
-
-                    //int? Fk_UID = (from u in dc.UIDandRIDDatas
-                    //               where u.PK_UniqueId == Uniqueid_SHORTURLDATA && u.TypeDiff == "1"
-                    //               select u.UIDorRID).SingleOrDefault();
                     if (longurl != null && !longurl.ToLower().StartsWith("http:") && !longurl.ToLower().StartsWith("https:"))
                         HttpContext.Current.Response.Redirect("http://" + longurl);
                     else
                         HttpContext.Current.Response.Redirect(longurl);
                     Fk_UID = uid_obj.PK_Uid;
-                    int? FK_RID = (from u in dc.UIDDATAs
-                                   where u.PK_Uid == Fk_UID
-                                   select u.FK_RID).SingleOrDefault();
-                    RIDDATA objr = (from r in dc.RIDDATAs
-                                        where r.PK_Rid == FK_RID
-                                        select r).SingleOrDefault();
-                    int? FK_clientid=objr.FK_ClientId;
+                    //int? FK_RID = (from u in dc.UIDDATAs
+                    //               where u.PK_Uid == Fk_UID
+                    //               select u.FK_RID).SingleOrDefault();
+                    //RIDDATA objr = (from r in dc.RIDDATAs
+                    //                    where r.PK_Rid == FK_RID
+                    //                    select r).SingleOrDefault();
+                    //int? FK_clientid = objr.FK_ClientId;
+
+                    int? FK_RID = uid_obj.FK_RID;
+                    int? FK_clientid = uid_obj.FK_ClientID;
 
                     //retrive ipaddress and browser
                     //string ipv4 = new ConvertionBO().GetIP4Address();
+                    var request = HttpContext.Current.Request;
                     string ipv4 = IpAddress();
-                    string ipv6 = HttpContext.Current.Request.UserHostAddress;
-                    string browser = HttpContext.Current.Request.Browser.Browser;
-                    string browserversion = HttpContext.Current.Request.Browser.Version;
-                    string req_url = HttpContext.Current.Request.UrlReferrer.ToString();
+                    string ipv6 = request.UserHostAddress;
+                    string browser = request.Browser.Browser;
+                    string browserversion = request.Browser.Version;
+                    string req_url = request.UrlReferrer.ToString();
                     //string[] header_array = HttpContext.Current.Request.Headers.AllKeys;
-                    string useragent = HttpContext.Current.Request.UserAgent;
-                    string hostname = HttpContext.Current.Request.UserHostName;
+                    string useragent = request.UserAgent;
+                    string hostname = request.UserHostName;
                     //string devicetype = HttpContext.Current.Request.Browser.Platform;
-                    string ismobiledevice = HttpContext.Current.Request.Browser.IsMobileDevice.ToString();
+                    string ismobiledevice = request.Browser.IsMobileDevice.ToString();
                     if(ipv4!="::1" && ipv4!=null&&ipv4!="")
                      ipnum = convertAddresstoNumber(ipv4);
 
                     //ipnum = convertAddresstoNumber("192.168.1.64");
 
 
-                    //retrive city,country
-                    //var City = ""; var Region = ""; var Country = ""; var CountryCode = ""; var url = "";
-                    ////url = "http://freegeoip.net/json/" + "99.25.39.48";
-                    //url = "http://freegeoip.net/json/" + ipv4;
-                    //var request = System.Net.WebRequest.Create(url);
-                    //using (WebResponse wrs = request.GetResponse())
-                    //using (Stream stream = wrs.GetResponseStream())
-                    //using (StreamReader reader = new StreamReader(stream))
-                    //{
-                    //    string json = reader.ReadToEnd();
-                    //    var obj = JObject.Parse(json);
-                    //    City = (string)obj["city"];
-                    //    Region = (string)obj["region_name"];
-                    //    Country = (string)obj["country_name"];
-                    //    CountryCode = (string)obj["country_code"];
-                    //}
-                    ////retrive city,country if city country not found with ipv4
-                    //if (City == "" && Country == "")
-                    //{
-                    //    url = "http://freegeoip.net/json/" + ipv6;
-                    //    var request1 = System.Net.WebRequest.Create(url);
-                    //    using (WebResponse wrs = request1.GetResponse())
-                    //    using (Stream stream = wrs.GetResponseStream())
-                    //    using (StreamReader reader = new StreamReader(stream))
-                    //    {
-                    //        string json = reader.ReadToEnd();
-                    //        var obj = JObject.Parse(json);
-                    //        City = (string)obj["city"];
-                    //        Region = (string)obj["region_name"];
-                    //        Country = (string)obj["country_name"];
-                    //        CountryCode = (string)obj["country_code"];
-                    //    }
-                    //}
+                    
                     //new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, browser, browserversion, City, Region, Country, CountryCode, req_url, useragent, hostname, devicetype, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
-                    new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, ipnum,browser, browserversion, req_url, useragent, hostname, latitude,longitude, ismobiledevice, Fk_UID, FK_RID, FK_clientid);
+                    new DataInsertionBO().InsertShortUrldata(ipv4, ipv6, ipnum,browser, browserversion, req_url, useragent, hostname, latitude,longitude, ismobiledevice, Fk_UID, FK_RID, FK_clientid,Cookievalue,uid_obj.MobileNumber);
                     //obj_userinfo.UserId = uid_obj.FK_ClientID;
                     //obj_userinfo.UserName = dc.Clients.Where(c => c.PK_ClientID == uid_obj.FK_ClientID).Select(x => x.UserName).SingleOrDefault();
                     //obj_userinfo.MobileNumber = uid_obj.MobileNumber;
                     //obj_userinfo.CampaingName = objr.CampaignName;
                     //return obj_userinfo;
-                   
+                    
+                    if (HttpContext.Current.Request.Cookies["VisitorCookie"] != null)
+                    {
+                        string cookievalue = HttpContext.Current.Request.Cookies["VisitorCookie"].Value;
+                        List<string> mobilenumbers = dc.CookieTables.Where(x => x.CookieValue == cookievalue).Select(y => y.MobileNumber).ToList();
+                        if (!mobilenumbers.Contains(uid_obj.MobileNumber))
+                        {
+                            CookieTable objc = new CookieTable();
+                            objc.CookieValue = cookievalue;
+                            objc.MobileNumber = uid_obj.MobileNumber;
+                            dc.CookieTables.Add(objc);
+                            dc.SaveChanges();
+                        }
+                    }
                 }
                 else
                 {

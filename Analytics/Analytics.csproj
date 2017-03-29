@@ -228,6 +228,9 @@
       <DependentUpon>AnalyticsModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="CookieTable.cs">
+      <DependentUpon>AnalyticsModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ErrorLog.cs">
       <DependentUpon>AnalyticsModel.tt</DependentUpon>
     </Compile>

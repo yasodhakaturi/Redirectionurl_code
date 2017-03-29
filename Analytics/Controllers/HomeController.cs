@@ -28,7 +28,10 @@ namespace Analytics.Controllers
         }
         public ActionResult GPS()
         {
-            string rid_param = ""; int rid_shorturl = 0; int rid_cookie = 0;
+            try 
+            { 
+            string rid_param = ""; 
+            //int rid_shorturl = 0; int rid_cookie = 0;
 
             if (Request.Url != null)
                 rid_param = Request.Url.AbsolutePath;
@@ -50,8 +53,25 @@ namespace Analytics.Controllers
                                          MobileNumber = u.MobileNumber,
                                          CampaingName = r.CampaignName
                                      }).SingleOrDefault();
+            if (obj_userinfo == null)
+            {
+                HttpContext.Response.Redirect("~/404.html");
+                UserInfo obj_userinfo1 = new UserInfo();
+                obj_userinfo1.checkModel = "0";
+                obj_userinfo = obj_userinfo1;
+            }
+            else
+            obj_userinfo.rid_param = rid_param;
+            
             return View(obj_userinfo);
             //return View();
+            }
+                catch (Exception ex)
+            {
+
+                ErrorLogs.LogErrorData(ex.StackTrace, ex.InnerException.ToString());
+                return View();
+            }
         }
 
         //private static readonly char[] BaseChars =
@@ -350,21 +370,21 @@ namespace Analytics.Controllers
 
         }
         //public ActionResult LoginRid()
-        public ActionResult LoginRid(string latitude, string longitude)
+        public ActionResult LoginRid(string latitude, string longitude, string rid_param)
         {
             try
             {
-                string rid_param = ""; int rid_shorturl = 0; int rid_cookie = 0;
+                //string rid_param = ""; int rid_shorturl = 0; int rid_cookie = 0;
                 
-                if (Request.UrlReferrer != null)
-                    rid_param = Request.UrlReferrer.LocalPath;
-                else
-                    rid_param = Request.Path;
-                if (rid_param.Contains("/"))
-                    rid_param = rid_param.Replace("/", "");
-                if (rid_param.Contains(@"\"))
-                    rid_param = rid_param.Replace(@"\", "");
-                rid_param = rid_param.Trim();
+                //if (Request.UrlReferrer != null)
+                //    rid_param = Request.UrlReferrer.LocalPath;
+                //else
+                //    rid_param = Request.Path;
+                //if (rid_param.Contains("/"))
+                //    rid_param = rid_param.Replace("/", "");
+                //if (rid_param.Contains(@"\"))
+                //    rid_param = rid_param.Replace(@"\", "");
+                //rid_param = rid_param.Trim();
                
 
                 //call monitize service here

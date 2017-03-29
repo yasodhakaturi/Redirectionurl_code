@@ -6,17 +6,12 @@
     <edmx:Diagrams>
       <Diagram DiagramId="c77b3ecf297f43b680397d8330dd5b6a" Name="Diagram1" ZoomLevel="43">
         <EntityTypeShape EntityType="shortenURLModel.RIDDATA" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="shortenURLModel.SHORTURLDATA" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="shortenURLModel.sysdiagram" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="shortenURLModel.UIDDATA" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="shortenURLModel.ErrorLog" Width="1.5" PointX="5.375" PointY="3.75" />
-        <AssociationConnector Association="shortenURLModel.FK_SHORTURLDATA_RIDDATA" />
         <AssociationConnector Association="shortenURLModel.FK_UIDDATA_RIDDATA" />
-        <AssociationConnector Association="shortenURLModel.FK_SHORTURLDATA_SHORTURLDATA" />
-        <AssociationConnector Association="shortenURLModel.FK_SHORTURLDATA_UIDDATA" />
         <EntityTypeShape EntityType="shortenURLModel.Client" Width="1.5" PointX="5.375" PointY="6.75" />
         <AssociationConnector Association="shortenURLModel.FK_RIDDATA_Client" />
-        <AssociationConnector Association="shortenURLModel.FK_SHORTURLDATA_Client" />
         <EntityTypeShape EntityType="shortenURLModel.LoginHistory" Width="1.5" PointX="7.375" PointY="4.75" />
         <AssociationConnector Association="shortenURLModel.FK_UIDDATA_Client" />
         <AssociationConnector Association="shortenURLModel.FK_UIDDATA_UIDDATA" />
@@ -24,6 +19,12 @@
         <EntityTypeShape EntityType="shortenURLModel.Master_Location" Width="1.5" PointX="8.375" PointY="0.75" />
         <EntityTypeShape EntityType="shortenURLModel.tmp_rownum_update" Width="1.5" PointX="9.375" PointY="3.75" />
         <EntityTypeShape EntityType="shortenURLModel.freeGeoipData" Width="1.5" PointX="9.375" PointY="6.75" />
+        <EntityTypeShape EntityType="shortenURLModel.SHORTURLDATA" Width="1.5" PointX="12" PointY="3.875" />
+        <AssociationConnector Association="shortenURLModel.FK_SHORTURLDATA_Client" />
+        <AssociationConnector Association="shortenURLModel.FK_SHORTURLDATA_RIDDATA" />
+        <AssociationConnector Association="shortenURLModel.FK_SHORTURLDATA_SHORTURLDATA" />
+        <AssociationConnector Association="shortenURLModel.FK_SHORTURLDATA_UIDDATA" />
+        <EntityTypeShape EntityType="shortenURLModel.CookieTable" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

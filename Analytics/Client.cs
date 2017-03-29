@@ -18,8 +18,8 @@ namespace Analytics
         public Client()
         {
             this.RIDDATAs = new HashSet<RIDDATA>();
-            this.SHORTURLDATAs = new HashSet<SHORTURLDATA>();
             this.UIDDATAs = new HashSet<UIDDATA>();
+            this.SHORTURLDATAs = new HashSet<SHORTURLDATA>();
         }
     
         public int PK_ClientID { get; set; }
@@ -37,8 +37,8 @@ namespace Analytics
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RIDDATA> RIDDATAs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SHORTURLDATA> SHORTURLDATAs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UIDDATA> UIDDATAs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SHORTURLDATA> SHORTURLDATAs { get; set; }
     }
 }

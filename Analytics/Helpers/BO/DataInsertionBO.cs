@@ -129,7 +129,7 @@ namespace Analytics.Helpers.BO
         }
 
 
-        public void InsertShortUrldata(string ipv4, string ipv6, string ipnum, string browser, string browser_version, string req_url, string useragent, string hostname, string latitude,string longitude, string ismobiledevice, int? fk_uid, int? fk_rid, int? FK_clientid)
+        public void InsertShortUrldata(string ipv4, string ipv6, string ipnum, string browser, string browser_version, string req_url, string useragent, string hostname, string latitude,string longitude, string ismobiledevice, int? fk_uid, int? fk_rid, int? FK_clientid,string CookieValue,string MobileNumber)
         {
             SqlConnection lSQLConn = null;
             SqlCommand lSQLCmd = new SqlCommand();
@@ -164,6 +164,8 @@ namespace Analytics.Helpers.BO
                 lSQLCmd.Parameters.Add(new SqlParameter("@fk_rid", fk_rid));
                 lSQLCmd.Parameters.Add(new SqlParameter("@FK_clientid", FK_clientid));
                 //lSQLCmd.Parameters.Add(new SqlParameter("@uniqueid", uniqueid));
+                lSQLCmd.Parameters.Add(new SqlParameter("@cookievalue", CookieValue));
+                lSQLCmd.Parameters.Add(new SqlParameter("@mobilenumber", MobileNumber));
                 lSQLCmd.Connection = lSQLConn;
                 lSQLCmd.ExecuteNonQuery();
             }
