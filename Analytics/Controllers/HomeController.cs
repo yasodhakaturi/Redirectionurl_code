@@ -28,50 +28,50 @@ namespace Analytics.Controllers
         }
         public ActionResult GPS()
         {
-            try 
-            { 
-            string rid_param = ""; 
-            //int rid_shorturl = 0; int rid_cookie = 0;
+            //try 
+            //{ 
+            //string rid_param = ""; 
+            ////int rid_shorturl = 0; int rid_cookie = 0;
 
-            if (Request.Url != null)
-                rid_param = Request.Url.AbsolutePath;
-            else
-                rid_param = Request.Path;
-            if (rid_param.Contains("/"))
-                rid_param = rid_param.Replace("/", "");
-            if (rid_param.Contains(@"\"))
-                rid_param = rid_param.Replace(@"\", "");
-            rid_param = rid_param.Trim();
-            UserInfo obj_userinfo = (from u in dc.UIDDATAs
-                                     join r in dc.RIDDATAs on u.FK_RID equals r.PK_Rid
-                                     join c in dc.Clients on r.FK_ClientId equals c.PK_ClientID
-                                     where u.UniqueNumber == rid_param
-                                     select new UserInfo()
-                                     {
-                                         UserId = c.PK_ClientID,
-                                         UserName = c.UserName,
-                                         MobileNumber = u.MobileNumber,
-                                         CampaingName = r.CampaignName
-                                     }).SingleOrDefault();
-            if (obj_userinfo == null)
-            {
-                HttpContext.Response.Redirect("~/404.html");
-                UserInfo obj_userinfo1 = new UserInfo();
-                obj_userinfo1.checkModel = "0";
-                obj_userinfo = obj_userinfo1;
-            }
-            else
-            obj_userinfo.rid_param = rid_param;
+            //if (Request.Url != null)
+            //    rid_param = Request.Url.AbsolutePath;
+            //else
+            //    rid_param = Request.Path;
+            //if (rid_param.Contains("/"))
+            //    rid_param = rid_param.Replace("/", "");
+            //if (rid_param.Contains(@"\"))
+            //    rid_param = rid_param.Replace(@"\", "");
+            //rid_param = rid_param.Trim();
+            //UserInfo obj_userinfo = (from u in dc.UIDDATAs
+            //                         join r in dc.RIDDATAs on u.FK_RID equals r.PK_Rid
+            //                         join c in dc.Clients on r.FK_ClientId equals c.PK_ClientID
+            //                         where u.UniqueNumber == rid_param
+            //                         select new UserInfo()
+            //                         {
+            //                             UserId = c.PK_ClientID,
+            //                             UserName = c.UserName,
+            //                             MobileNumber = u.MobileNumber,
+            //                             CampaingName = r.CampaignName
+            //                         }).SingleOrDefault();
+            //if (obj_userinfo == null)
+            //{
+            //    HttpContext.Response.Redirect("~/404.html");
+            //    UserInfo obj_userinfo1 = new UserInfo();
+            //    obj_userinfo1.checkModel = "0";
+            //    obj_userinfo = obj_userinfo1;
+            //}
+            //else
+            //obj_userinfo.rid_param = rid_param;
             
-            return View(obj_userinfo);
-            //return View();
-            }
-                catch (Exception ex)
-            {
+            //return View(obj_userinfo);
+            return View();
+            //}
+            //    catch (Exception ex)
+            //{
 
-                ErrorLogs.LogErrorData(ex.StackTrace, ex.InnerException.ToString());
-                return View();
-            }
+            //    ErrorLogs.LogErrorData(ex.StackTrace, ex.InnerException.ToString());
+            //    return View();
+            //}
         }
 
         //private static readonly char[] BaseChars =
@@ -369,22 +369,22 @@ namespace Analytics.Controllers
 
 
         }
-        //public ActionResult LoginRid()
-        public ActionResult LoginRid(string latitude, string longitude, string rid_param)
+        //public ActionResult LoginRid(string latitude, string longitude, string rid_param)
+        public ActionResult LoginRid(string latitude, string longitude)
         {
             try
             {
-                //string rid_param = ""; int rid_shorturl = 0; int rid_cookie = 0;
-                
-                //if (Request.UrlReferrer != null)
-                //    rid_param = Request.UrlReferrer.LocalPath;
-                //else
-                //    rid_param = Request.Path;
-                //if (rid_param.Contains("/"))
-                //    rid_param = rid_param.Replace("/", "");
-                //if (rid_param.Contains(@"\"))
-                //    rid_param = rid_param.Replace(@"\", "");
-                //rid_param = rid_param.Trim();
+                string rid_param = ""; int rid_shorturl = 0; int rid_cookie = 0;
+
+                if (Request.UrlReferrer != null)
+                    rid_param = Request.UrlReferrer.LocalPath;
+                else
+                    rid_param = Request.Path;
+                if (rid_param.Contains("/"))
+                    rid_param = rid_param.Replace("/", "");
+                if (rid_param.Contains(@"\"))
+                    rid_param = rid_param.Replace(@"\", "");
+                rid_param = rid_param.Trim();
                
 
                 //call monitize service here
